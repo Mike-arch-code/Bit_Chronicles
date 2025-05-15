@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.app"
+    namespace = "com.example.bit_chronicles"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.app"
+        applicationId = "com.example.bit_chronicles"
         minSdk = 24
         targetSdk = 35
         versionCode = 1

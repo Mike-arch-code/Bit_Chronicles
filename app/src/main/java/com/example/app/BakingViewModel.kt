@@ -1,6 +1,6 @@
 package com.example.app
 
-import android.graphics.Bitmap
+
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.GenerativeModel
@@ -22,17 +22,12 @@ class BakingViewModel : ViewModel() {
         apiKey = BuildConfig.apiKey
     )
 
-    fun sendPrompt(
-        bitmap: Bitmap,
-        prompt: String
-    ) {
+    fun sendPrompt(prompt: String) {
         _uiState.value = UiState.Loading
-
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = generativeModel.generateContent(
                     content {
-                        image(bitmap)
                         text(prompt)
                     }
                 )
