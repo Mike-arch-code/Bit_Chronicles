@@ -12,12 +12,19 @@ import com.bit_chronicles.R
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+import com.bit_chronicles.data.firebase.RealTime
+
 
 class MainActivity : ComponentActivity() {
 
     private val iaConexion: IaConexion by viewModels()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val db = RealTime()
+        db.write("path/to/data", "Hola Mundo")
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
