@@ -1,0 +1,1 @@
+Una aplicación móvil que emula el comportamiento de un Dungeon Master (DM) con ayuda visual y narrativa potenciada por IA, para facilitar la experiencia de juego en Dungeons & Dragons y hacerla más accesible, dinámica e inmersiva.
