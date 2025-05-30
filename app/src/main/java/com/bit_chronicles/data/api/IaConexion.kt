@@ -1,4 +1,4 @@
-package com.bit_chronicles.data.api;
+package com.bit_chronicles.data.api
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

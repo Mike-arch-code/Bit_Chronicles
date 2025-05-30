@@ -1,0 +1,35 @@
+Index: app/src/main/java/com/bit_chronicles/BakingViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.bit_chronicles;\r\n\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.viewModelScope\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.flow.MutableStateFlow\r\nimport kotlinx.coroutines.flow.StateFlow\r\nimport kotlinx.coroutines.flow.asStateFlow\r\nimport kotlinx.coroutines.launch\r\n\r\nimport com.google.ai.client.generativeai.GenerativeModel\r\nimport com.google.ai.client.generativeai.type.content\r\n\r\nclass BakingViewModel : ViewModel() {\r\n\r\n    private val _uiState = MutableStateFlow<UiState>(UiState.Initial)\r\n    val uiState: StateFlow<UiState> = _uiState.asStateFlow()\r\n\r\n\r\n    private val generativeModel = GenerativeModel(\r\n        modelName = \"gemini-1.5-flash\",\r\n        apiKey = BuildConfig.apiKey\r\n    )\r\n\r\n    fun sendPrompt(prompt: String) {\r\n        _uiState.value = UiState.Loading\r\n\r\n        viewModelScope.launch(Dispatchers.IO) {\r\n            try {\r\n                val response = generativeModel.generateContent(\r\n                    content {\r\n                        text(prompt)\r\n                    }\r\n                )\r\n                val output = response.text ?: \"No hubo respuesta\"\r\n                _uiState.value = UiState.Success(output)\r\n            } catch (e: Exception) {\r\n                _uiState.value = UiState.Error(e.message ?: \"Error desconocido\")\r\n            }\r\n        }\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/bit_chronicles/BakingViewModel.kt b/app/src/main/java/com/bit_chronicles/BakingViewModel.kt
+--- a/app/src/main/java/com/bit_chronicles/BakingViewModel.kt	(revision feac12bce13faa84ded86c3d8bfe20025c4d6a55)
++++ b/app/src/main/java/com/bit_chronicles/BakingViewModel.kt	(date 1748575789834)
+@@ -1,4 +1,4 @@
+-package com.bit_chronicles;
++package com.bit_chronicles
+ 
+ import androidx.lifecycle.ViewModel
+ import androidx.lifecycle.viewModelScope
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\" defaultProject=\"true\" />\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision feac12bce13faa84ded86c3d8bfe20025c4d6a55)
++++ b/.idea/vcs.xml	(date 1748575887206)
+@@ -1,4 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="VcsDirectoryMappings" defaultProject="true" />
++  <component name="VcsDirectoryMappings">
++    <mapping directory="$PROJECT_DIR$" vcs="Git" />
++  </component>
+ </project>
+\ No newline at end of file

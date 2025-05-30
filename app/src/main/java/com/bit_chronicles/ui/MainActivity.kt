@@ -1,4 +1,4 @@
-package com.bit_chronicles.ui;
+package com.bit_chronicles.ui
 
 import android.os.Bundle
 import android.widget.Button
