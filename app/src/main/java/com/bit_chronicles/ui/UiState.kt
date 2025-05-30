@@ -1,4 +1,4 @@
-package com.bit_chronicles;
+package com.bit_chronicles.ui;
 
 sealed class UiState {
     object Initial : UiState()

@@ -1,4 +1,4 @@
-package com.bit_chronicles;
+package com.bit_chronicles.ui;
 
 import android.os.Bundle
 import android.widget.Button
@@ -7,13 +7,15 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.bit_chronicles.data.api.IaConexion
+import com.bit_chronicles.R
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 class MainActivity : ComponentActivity() {
 
-    private val bakingViewModel: BakingViewModel by viewModels()
+    private val iaConexion: IaConexion by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,12 +28,12 @@ class MainActivity : ComponentActivity() {
         sendButton.setOnClickListener {
             val prompt = promptEditText.text.toString()
             if (prompt.isNotBlank()) {
-                bakingViewModel.sendPrompt(prompt)
+                iaConexion.sendPrompt(prompt)
             }
         }
 
         lifecycleScope.launch {
-            bakingViewModel.uiState.collectLatest { state ->
+            iaConexion.uiState.collectLatest { state ->
                 when (state) {
                     is UiState.Initial -> responseTextView.text = ""
                     is UiState.Loading -> responseTextView.text = "Cargando..."
