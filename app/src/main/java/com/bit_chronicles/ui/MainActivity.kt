@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import com.bit_chronicles.data.firebase.RealTime
 import com.bit_chronicles.model.AdventurePrompt
 
-
 class MainActivity : ComponentActivity() {
 
     private val  ApiService: ApiService by viewModels()
@@ -23,7 +22,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         val db = RealTime()
-        db.write("path/to/data", "Hola Mundo")
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -51,7 +49,9 @@ class MainActivity : ComponentActivity() {
             )
             val prompt = adventurePrompt.buildPromptString()
             if (prompt.isNotBlank()) {
+                db.write("path/to/data", prompt)
                 ApiService.sendPrompt(prompt)
+
             }
         }
 
