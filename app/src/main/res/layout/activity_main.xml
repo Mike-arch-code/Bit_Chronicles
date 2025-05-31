@@ -1,28 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/promptEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Escribe tu prompt aquí" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <Button
-        android:id="@+id/sendButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Enviar"
-        android:layout_marginTop="8dp" />
+        <!-- Campo: Nombre del mundo -->
+        <EditText
+            android:id="@+id/editWorldName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre del mundo" />
 
-    <TextView
-        android:id="@+id/responseTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Respuesta aquí"
-        android:layout_marginTop="16dp" />
+        <!-- Campo: Tipo de ambientación -->
+        <EditText
+            android:id="@+id/editSettingType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tipo de ambientación" />
 
-</LinearLayout>
+        <!-- Campo: Razas dominantes -->
+        <EditText
+            android:id="@+id/editDominantRaces"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Razas dominantes o facciones" />
+
+        <!-- Campo: Sistema de poder -->
+        <EditText
+            android:id="@+id/editPowerSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Magia o tecnología" />
+
+        <!-- Campo: Conflicto principal -->
+        <EditText
+            android:id="@+id/editMainConflict"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Conflicto principal" />
+
+        <!-- Campo: Lore del mundo -->
+        <EditText
+            android:id="@+id/editWorldLore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Historia o lore del mundo"
+            android:minLines="3"
+            android:gravity="top"
+            android:inputType="textMultiLine" />
+
+        <!-- Campo: Tono -->
+        <EditText
+            android:id="@+id/editTone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tono narrativo (épico, oscuro, etc.)" />
+
+        <!-- Botón para enviar -->
+        <Button
+            android:id="@+id/sendButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Enviar Prompt"
+            android:layout_marginTop="16dp" />
+
+        <!-- Respuesta de la IA -->
+        <TextView
+            android:id="@+id/responseTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Respuesta aparecerá aquí..."
+            android:layout_marginTop="24dp"
+            android:padding="8dp" />
+    </LinearLayout>
+</ScrollView>
+

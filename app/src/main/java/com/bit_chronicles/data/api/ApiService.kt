@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import com.google.ai.client.generativeai.GenerativeModel
 import com.google.ai.client.generativeai.type.content
 
-class IaConexion : ViewModel() {
+class ApiService : ViewModel() {
 
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
