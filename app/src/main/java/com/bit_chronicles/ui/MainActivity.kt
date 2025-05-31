@@ -7,22 +7,18 @@ import android.widget.TextView
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.bit_chronicles.data.api.ApiService
 import com.bit_chronicles.R
+import com.bit_chronicles.data.api.ApiService
+import com.bit_chronicles.data.firebase.AdventureRepository
+import com.bit_chronicles.model.AdventurePrompt
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-import com.bit_chronicles.data.firebase.RealTime
-import com.bit_chronicles.model.AdventurePrompt
-
 class MainActivity : ComponentActivity() {
 
-    private val  ApiService: ApiService by viewModels()
+    private val ApiService: ApiService by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val db = RealTime()
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -38,20 +34,43 @@ class MainActivity : ComponentActivity() {
         val editTone = findViewById<EditText>(R.id.editTone)
 
         sendButton.setOnClickListener {
-            val adventurePrompt = AdventurePrompt(
-                editWorldName.text.toString().trim(),
-                editSettingType.text.toString().trim(),
-                editDominantRaces.text.toString().trim(),
-                editPowerSystem.text.toString().trim(),
-                editMainConflict.text.toString().trim(),
-                editWorldLore.text.toString().trim(),
-                editTone.text.toString().trim()
-            )
-            val prompt = adventurePrompt.buildPromptString()
-            if (prompt.isNotBlank()) {
-                db.write("path/to/data", prompt)
-                ApiService.sendPrompt(prompt)
+            val worldName = editWorldName.text.toString().trim()
+            val settingType = editSettingType.text.toString().trim()
+            val dominantRaces = editDominantRaces.text.toString().trim()
+            val powerSystem = editPowerSystem.text.toString().trim()
+            val mainConflict = editMainConflict.text.toString().trim()
+            val worldLore = editWorldLore.text.toString().trim()
+            val tone = editTone.text.toString().trim()
 
+            val prompt = AdventurePrompt(
+                worldName,
+                settingType,
+                dominantRaces,
+                powerSystem,
+                mainConflict,
+                worldLore,
+                tone
+            ).buildPromptString()
+
+            if (prompt.isNotBlank()) {
+                val metadata = mapOf(
+                    "worldName" to worldName,
+                    "settingType" to settingType,
+                    "dominantRaces" to dominantRaces,
+                    "powerSystem" to powerSystem,
+                    "mainConflict" to mainConflict,
+                    "worldLore" to worldLore,
+                    "tone" to tone,
+                    "createdAt" to System.currentTimeMillis()
+                )
+
+                val userId = "Mike"
+                val adventureId = worldName // puedes usar un UUID si prefieres
+
+                AdventureRepository.createAdventure(userId, adventureId, metadata, prompt)
+                AdventureRepository.addMessageToChat(userId, adventureId, "1", "dm", "Hola, bienvenido a tu aventura.")
+
+                ApiService.sendPrompt(prompt)
             }
         }
 
@@ -60,7 +79,12 @@ class MainActivity : ComponentActivity() {
                 when (state) {
                     is UiState.Initial -> responseTextView.text = ""
                     is UiState.Loading -> responseTextView.text = "Cargando..."
-                    is UiState.Success -> responseTextView.text = state.response
+                    is UiState.Success -> {
+                        responseTextView.text = state.response
+                        val userId = "Mike"
+                        val adventureId = editWorldName.text.toString().trim()
+                        AdventureRepository.addMessageToChat(userId, adventureId, "2", "dm", state.response)
+                    }
                     is UiState.Error -> responseTextView.text = "Error: ${state.message}"
                 }
             }

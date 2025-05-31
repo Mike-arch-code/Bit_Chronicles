@@ -19,10 +19,15 @@ class ApiService : ViewModel() {
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
 
+
+
     private val generativeModel = GenerativeModel(
         modelName = "gemini-1.5-flash",
         apiKey = BuildConfig.apiKey
     )
+
+
+
 
     fun sendPrompt(prompt: String) {
         _uiState.value = UiState.Loading
