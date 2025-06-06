@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/titlename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-80dp"/>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="383dp"
+        android:layout_marginTop="23dp"
+        android:contentDescription="@string/placeholderimagen"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <Button
+        android:id="@+id/botoncampañas"
+        style="@style/Widget.AppCompat.Button"
+        android:layout_width="255dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="Campañas          "
+        android:textAlignment="textEnd"
+
+        />
+
+
+    <Button
+        android:id="@+id/botonpjs"
+        android:layout_width="252dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="Personajes      "
+        android:textAlignment="textEnd" />
+
+</LinearLayout>
