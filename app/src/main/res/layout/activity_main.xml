@@ -3,20 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Campo: Nombre del mundo -->
+        <include android:layout="@layout/titlename"/>
+
+        <include
+            layout="@layout/titlename"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <EditText
             android:id="@+id/editWorldName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre del mundo" />
 
-        <!-- Campo: Tipo de ambientación -->
+
         <EditText
             android:id="@+id/editSettingType"
             android:layout_width="match_parent"
