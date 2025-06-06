@@ -1,4 +1,4 @@
-package com.bit_chronicles.ui
+package com.bit_chronicles.viewmodel
 
 sealed class UiState {
     object Initial : UiState()

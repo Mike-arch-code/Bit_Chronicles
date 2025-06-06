@@ -1,4 +1,4 @@
-package com.bit_chronicles.ui
+package com.bit_chronicles.viewmodel
 
 import android.os.Bundle
 import android.widget.Button
@@ -8,8 +8,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
-import com.bit_chronicles.data.api.ApiService
-import com.bit_chronicles.data.firebase.AdventureRepository
+import com.bit_chronicles.model.api.ApiService
+import com.bit_chronicles.model.firebase.AdventureRepository
 import com.bit_chronicles.model.AdventurePrompt
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

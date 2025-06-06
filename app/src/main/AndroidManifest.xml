@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Bit_Chronicles"
         tools:targetApi="31">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".viewmodel.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.Bit_Chronicles">
             <intent-filter>

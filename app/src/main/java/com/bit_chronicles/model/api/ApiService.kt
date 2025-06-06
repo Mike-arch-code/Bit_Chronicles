@@ -1,9 +1,9 @@
-package com.bit_chronicles.data.api
+package com.bit_chronicles.model.api
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bit_chronicles.BuildConfig
-import com.bit_chronicles.ui.UiState
+import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

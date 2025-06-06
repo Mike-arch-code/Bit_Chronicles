@@ -1,4 +1,4 @@
-package com.bit_chronicles.data.firebase
+package com.bit_chronicles.model.firebase
 
 import java.text.SimpleDateFormat
 import java.util.Date
