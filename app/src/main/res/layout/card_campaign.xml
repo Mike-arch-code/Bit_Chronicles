@@ -10,11 +10,11 @@
     android:layout_marginHorizontal="16dp">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="12dp"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:gravity="center_vertical">
 
         <ImageView
             android:layout_width="40dp"
@@ -26,10 +26,9 @@
             android:id="@+id/tvCampName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Personaje X"
+            android:text="CAMPAÑA X"
             android:textStyle="bold"
             android:textSize="16sp"
             android:textColor="@android:color/black" />
-
     </LinearLayout>
 </androidx.cardview.widget.CardView>

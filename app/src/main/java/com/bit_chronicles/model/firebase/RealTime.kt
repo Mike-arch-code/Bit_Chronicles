@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class RealTime{
+class RealTime {
 
     private val database: FirebaseDatabase = FirebaseDatabase.getInstance()
     private val rootRef: DatabaseReference = database.reference
@@ -58,4 +58,28 @@ class RealTime{
                 onError(exception)
             }
     }
+
+
+    fun getCampaignList(userId: String, onResult: (List<String>) -> Unit, onError: (Exception) -> Unit = {}) {
+        val path = "aventuras/$userId"
+
+        rootRef.child(path).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val campaignNames = mutableListOf<String>()
+
+                for (child in snapshot.children) {
+                    val campaignName = child.key
+                    campaignName?.let { campaignNames.add(it) }
+                }
+
+                onResult(campaignNames)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("RealTime", "Error al leer campañas: ${error.message}")
+                onError(Exception(error.message))
+            }
+        })
+    }
+
 }
