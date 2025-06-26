@@ -21,6 +21,8 @@
         </activity>
         <activity android:name=".viewmodel.LoginActivity"/>
         <activity android:name=".viewmodel.HomeActivity"/>
+        <activity android:name=".viewmodel.CharacterActivity"/>
+        <activity android:name=".viewmodel.CampaignActivity"/>
     </application>
 
 </manifest>

@@ -26,10 +26,4 @@
         android:src="@mipmap/bctypologo_foreground"
         tools:src="@mipmap/bctypologo_foreground" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="42dp" />
-
 </LinearLayout>
