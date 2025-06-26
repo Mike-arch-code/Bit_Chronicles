@@ -4,14 +4,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bit_chronicles.BuildConfig
 import com.bit_chronicles.viewmodel.UiState
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-
-import com.google.ai.client.generativeai.GenerativeModel
-import com.google.ai.client.generativeai.type.content
 
 class ApiService : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
@@ -37,4 +36,3 @@ class ApiService : ViewModel() {
         }
     }
 }
-

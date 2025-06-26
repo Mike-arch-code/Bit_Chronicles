@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_creat_camp)
 
         val sendButton = findViewById<Button>(R.id.sendButton)
         val responseTextView = findViewById<TextView>(R.id.responseTextView)

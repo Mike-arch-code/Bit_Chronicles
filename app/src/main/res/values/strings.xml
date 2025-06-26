@@ -8,5 +8,10 @@
     <string name="image2_description">Cookies</string>
     <string name="image3_description">Cake</string>
     <string name="results_placeholder">(Results will appear here)</string>
-    <string name="placeholderimagen">placeholderimagen</string>
+    <string name="hint_username">User</string>
+    <string name="hint_password">Password</string>
+    <string name="button_login">Ingress</string>
+    <string name="crear_campa_a">CREAR CAMPAÑA</string>
+    <string name="crear_personaje">Crear Personaje</string>
+    <string name="nombre_del_personaje">Nombre del Personaje</string>
 </resources>

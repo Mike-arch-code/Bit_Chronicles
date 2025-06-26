@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Bit_Chronicles"
         tools:targetApi="31">
         <activity
-            android:name=".viewmodel.MainActivity"
+            android:name=".viewmodel.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Bit_Chronicles">
             <intent-filter>
@@ -19,6 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".viewmodel.LoginActivity"/>
+        <activity android:name=".viewmodel.HomeActivity"/>
     </application>
 
 </manifest>

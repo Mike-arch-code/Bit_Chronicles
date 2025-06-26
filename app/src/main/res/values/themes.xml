@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Theme.Bit_Chronicles" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/crema</item>
+        <item name="colorPrimaryVariant">@color/crema</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/crema</item>
+    </style>
 
-    <style name="Theme.Bit_Chronicles" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

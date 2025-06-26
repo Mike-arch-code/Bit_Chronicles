@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="editCharacterName" type="id" />
+    <item name="editRace" type="id" />
+    <item name="editClass" type="id" />
+    <item name="editBackground" type="id" />
+    <item name="editAlignment" type="id" />
+    <item name="editPersonalityTraits" type="id" />
+    <item name="editAbilities" type="id" />
+    <item name="editMotivation" type="id" />
+    <item name="sendCharacterButton" type="id" />
+</resources>
