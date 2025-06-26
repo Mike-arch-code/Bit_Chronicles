@@ -23,6 +23,8 @@
         <activity android:name=".viewmodel.HomeActivity"/>
         <activity android:name=".viewmodel.CharacterActivity"/>
         <activity android:name=".viewmodel.CampaignActivity"/>
+        <activity android:name=".viewmodel.activity_create_campaign"/>
+        <activity android:name=".viewmodel.activity_create_character"/>
     </application>
 
 </manifest>

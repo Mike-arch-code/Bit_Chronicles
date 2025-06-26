@@ -12,6 +12,11 @@ class CampaignActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camps_screen)
 
+        val btnCrearCampaña = findViewById<Button>(R.id.btnCrearCampaña)
 
+        btnCrearCampaña.setOnClickListener {
+            val intent = Intent(this, activity_create_campaign::class.java)
+            startActivity(intent)
+        }
     }
 }
