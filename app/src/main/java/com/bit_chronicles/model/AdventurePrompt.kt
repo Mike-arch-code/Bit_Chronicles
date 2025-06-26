@@ -21,7 +21,7 @@ class AdventurePrompt(
             El trasfondo de este mundo incluye la siguiente historia: *$worldLore*.
 
             Quiero que crees una introducción narrativa para una aventura de rol inspirada en Dungeons & Dragons, con un tono **$tone**. 
-            La historia debe ser inmersiva, coherente y ofrecer un gancho poderoso para que los jugadores quieran explorar este universo.
+            La historia debe ser inmersiva, coherente y ofrecer un gancho poderoso para que los jugadores quieran explorar este gran universo.
         """.trimIndent()
     }
 }
