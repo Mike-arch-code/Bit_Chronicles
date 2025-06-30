@@ -26,6 +26,8 @@
         <activity android:name=".viewmodel.activity_create_campaign"/>
         <activity android:name=".viewmodel.activity_create_character"/>
         <activity android:name=".viewmodel.CampaignListActivity"/>
+        <activity android:name=".viewmodel.CampaignInfoActivity"/>
+        <activity android:name=".viewmodel.MapActivity"/>
     </application>
 
 </manifest>

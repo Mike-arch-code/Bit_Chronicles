@@ -81,5 +81,29 @@ class RealTime {
             }
         })
     }
+    fun getCampaignInfo(
+        userId: String,
+        campaignName: String,
+        onResult: (Map<String, Any?>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        val path = "aventuras/$userId/$campaignName"
+
+        rootRef.child(path).get()
+            .addOnSuccessListener { snapshot ->
+                val prompt = snapshot.child("historia/prompt").value as? String ?: ""
+                val metadata = snapshot.child("metadata").value as? Map<String, Any?> ?: emptyMap()
+
+                val result = metadata.toMutableMap()
+                result["prompt"] = prompt
+
+                onResult(result)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("RealTime", "Error al obtener info campaña: ${exception.message}")
+                onError(exception)
+            }
+    }
+
 
 }

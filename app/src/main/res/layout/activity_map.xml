@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/map_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#888888">
+
+    <com.bit_chronicles.viewmodel.IsoMapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6" />
+
+        <!-- Puedes agregar botones, controles u otra UI aquí abajo -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.4"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp">
+            <!-- Controles o info del juego -->
+        </LinearLayout>
+</LinearLayout>

@@ -2,6 +2,7 @@ package com.bit_chronicles.viewmodel
 
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,7 +26,7 @@ class CampaignListActivity : AppCompatActivity() {
     }
 
     private fun cargarCampañas() {
-        val userId = "Mike" // Reemplazar por ID dinámico si usas Auth
+        val userId = "Mike"
         db.getCampaignList(userId,
             onResult = { lista ->
                 for (camp in lista) {
@@ -33,6 +34,12 @@ class CampaignListActivity : AppCompatActivity() {
                         .inflate(R.layout.card_campaign, campaignListContainer, false)
                     val textView = card.findViewById<TextView>(R.id.tvCampName)
                     textView.text = camp
+                    card.setOnClickListener {
+                        val intent = Intent(this, CampaignInfoActivity::class.java)
+                        intent.putExtra("campaignName", camp)
+                        startActivity(intent)
+                    }
+
                     campaignListContainer.addView(card)
                 }
             },
