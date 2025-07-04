@@ -25,7 +25,7 @@
         android:layout_width="185dp"
         android:layout_height="48dp"
         android:layout_marginTop="32dp"
-        android:background="@color/beige"
+        android:background="@drawable/roundedbutton"
         android:text="Botón 1"
         app:layout_constraintStart_toEndOf="@id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,8 @@
         android:layout_width="185dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:background="@color/beige"
+
+        android:background="@drawable/roundedbutton"
         android:text="Botón 2"
         app:layout_constraintStart_toStartOf="@id/button5"
         app:layout_constraintTop_toBottomOf="@id/button5" />
@@ -48,7 +49,7 @@
         android:layout_width="185dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
-        android:background="@color/beige"
+        android:background="@drawable/roundedbutton"
         android:text="Botón 3"
         app:layout_constraintStart_toStartOf="@id/button2"
         app:layout_constraintTop_toBottomOf="@id/button2" />
@@ -71,7 +72,7 @@
         android:layout_height="54dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="32dp"
-        android:background="@color/crema"
+        android:background="@drawable/roundedbutton"
         android:text="Botón final"
         app:layout_constraintTop_toBottomOf="@id/frameLayout"
         app:layout_constraintStart_toStartOf="parent"

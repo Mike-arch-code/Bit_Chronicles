@@ -11,7 +11,7 @@
         android:id="@+id/TitleName"
         android:layout_width="259dp"
         android:layout_height="47dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/app_name"
         android:src="@drawable/tipologo"
         tools:src="@drawable/tipologo" />
