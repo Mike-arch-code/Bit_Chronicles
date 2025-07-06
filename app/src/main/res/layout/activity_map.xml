@@ -6,20 +6,27 @@
     android:orientation="vertical"
     android:background="#888888">
 
+    <!-- Vista del mapa -->
     <com.bit_chronicles.viewmodel.IsoMapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.6" />
 
-        <!-- Puedes agregar botones, controles u otra UI aquí abajo -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.4"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:padding="16dp">
-            <!-- Controles o info del juego -->
-        </LinearLayout>
+    <!-- Controles y botón de voz -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btnVoice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🎤 Hablar" />
+    </LinearLayout>
 </LinearLayout>
+

@@ -1,5 +1,7 @@
 package com.bit_chronicles.model
 
+
+
 class AdventurePrompt(
     private val worldName: String,
     private val settingType: String,
