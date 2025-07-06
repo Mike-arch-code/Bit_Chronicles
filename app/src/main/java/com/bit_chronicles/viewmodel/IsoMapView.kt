@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.bit_chronicles.model.MapGenerator
+import com.bit_chronicles.R
 
 class IsoMapView @JvmOverloads constructor(
     context: Context,
@@ -17,10 +18,10 @@ class IsoMapView @JvmOverloads constructor(
     private val tileHeight = 64
     private val visibleSize = 5
 
-    private val paintGrass = Paint().apply { color = Color.parseColor("#8BC34A") }
-    private val paintEnemy = Paint().apply { color = Color.parseColor("#FF8A65") }
-    private val paintObstacle = Paint().apply { color = Color.parseColor("#B0BEC5") }
-    private val paintPlayer = Paint().apply { color = Color.BLUE }
+    private val tileGrass = BitmapFactory.decodeResource(resources, R.drawable.prueba)
+    private val tileEnemy = BitmapFactory.decodeResource(resources, R.drawable.prueba)
+    private val tileObstacle = BitmapFactory.decodeResource(resources, R.drawable.pruebareliebe)
+    private val tilePlayer = BitmapFactory.decodeResource(resources, R.drawable.prueba)
 
     private val selectedTilePaint = Paint().apply {
         color = Color.YELLOW
@@ -34,12 +35,12 @@ class IsoMapView @JvmOverloads constructor(
 
     private val map = MapGenerator.generateMap()
 
-    // Posición del jugador en el mapa global
     private var playerMapRow = 50
     private var playerMapCol = 50
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+
         val offsetX = width / 2
         val offsetY = 100
 
@@ -48,40 +49,31 @@ class IsoMapView @JvmOverloads constructor(
                 val mapRow = playerMapRow - 2 + row
                 val mapCol = playerMapCol - 2 + col
 
-                val x = (col - row) * tileWidth / 2 + offsetX
-                val y = (col + row) * tileHeight / 2 + offsetY
+                val screenX = (col - row) * tileWidth / 2 + offsetX
+                val screenY = (col + row) * tileHeight / 2 + offsetY
 
-                val isPlayerPosition = row == 2 && col == 2
+                val isPlayer = row == 2 && col == 2
 
-                val paint = when {
-                    isPlayerPosition -> paintPlayer
-                    map.getOrNull(mapRow)?.getOrNull(mapCol) == 2 -> paintEnemy
-                    map.getOrNull(mapRow)?.getOrNull(mapCol) == 3 -> paintObstacle
-                    else -> paintGrass
+                val bitmap = when {
+                    isPlayer -> tilePlayer
+                    map.getOrNull(mapRow)?.getOrNull(mapCol) == 2 -> tileEnemy
+                    map.getOrNull(mapRow)?.getOrNull(mapCol) == 3 -> tileObstacle
+                    else -> tileGrass
                 }
 
-                drawTile(canvas, x, y, paint)
+                drawTileBitmap(canvas, screenX, screenY, bitmap)
 
                 if (row == selectedRow && col == selectedCol) {
-                    drawTileHighlight(canvas, x, y)
+                    drawTileHighlight(canvas, screenX, screenY)
                 }
             }
         }
     }
 
-    private fun drawTile(canvas: Canvas, x: Int, y: Int, paint: Paint) {
-        val path = Path().apply {
-            moveTo(x.toFloat(), y.toFloat())
-            lineTo((x + tileWidth / 2).toFloat(), (y + tileHeight / 2).toFloat())
-            lineTo(x.toFloat(), (y + tileHeight).toFloat())
-            lineTo((x - tileWidth / 2).toFloat(), (y + tileHeight / 2).toFloat())
-            close()
-        }
-        canvas.drawPath(path, paint)
-        canvas.drawPath(path, Paint().apply {
-            style = Paint.Style.STROKE
-            color = Color.DKGRAY
-        })
+    private fun drawTileBitmap(canvas: Canvas, x: Int, y: Int, bitmap: Bitmap) {
+        val drawX = x - bitmap.width / 2
+        val drawY = y + tileHeight / 2 - bitmap.height
+        canvas.drawBitmap(bitmap, drawX.toFloat(), drawY.toFloat(), null)
     }
 
     private fun drawTileHighlight(canvas: Canvas, x: Int, y: Int) {
@@ -115,7 +107,7 @@ class IsoMapView @JvmOverloads constructor(
 
     private fun screenToIso(x: Float, y: Float): Pair<Int, Int> {
         val offsetX = width / 2
-        val offsetY = 100  // <- ahora coincide con onDraw()
+        val offsetY = 100
 
         val tempX = x - offsetX
         val tempY = y - offsetY
@@ -126,7 +118,6 @@ class IsoMapView @JvmOverloads constructor(
         return Pair(row, col)
     }
 
-
     fun movePlayerBy(deltaRow: Int, deltaCol: Int) {
         val newRow = playerMapRow + deltaRow
         val newCol = playerMapCol + deltaCol
@@ -136,11 +127,7 @@ class IsoMapView @JvmOverloads constructor(
             invalidate()
         }
     }
-    fun getSelectedRow(): Int {
-        return selectedRow
-    }
 
-    fun getSelectedCol(): Int {
-        return selectedCol
-    }
+    fun getSelectedRow(): Int = selectedRow
+    fun getSelectedCol(): Int = selectedCol
 }
