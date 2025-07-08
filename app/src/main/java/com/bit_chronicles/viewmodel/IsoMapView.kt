@@ -16,12 +16,12 @@ class IsoMapView @JvmOverloads constructor(
 
     private val tileWidth = 128
     private val tileHeight = 64
-    private val visibleSize = 5
+    private val visibleSize = 8
 
-    private val tileGrass = BitmapFactory.decodeResource(resources, R.drawable.prueba)
-    private val tileEnemy = BitmapFactory.decodeResource(resources, R.drawable.prueba)
-    private val tileObstacle = BitmapFactory.decodeResource(resources, R.drawable.pruebareliebe)
-    private val tilePlayer = BitmapFactory.decodeResource(resources, R.drawable.prueba)
+    private val tileGrass = loadBitmapFromAssets(context, "tilesmapa/grass")
+    private val tileEnemy = loadBitmapFromAssets(context, "tilesmapa/roca.png")
+    private val tileObstacle = loadBitmapFromAssets(context, "tilesmapa/water.png")
+    private val tilePlayer = loadBitmapFromAssets(context, "player/grassplayer.png")
 
     private val selectedTilePaint = Paint().apply {
         color = Color.YELLOW
@@ -37,6 +37,12 @@ class IsoMapView @JvmOverloads constructor(
 
     private var playerMapRow = 50
     private var playerMapCol = 50
+
+    private fun loadBitmapFromAssets(context: Context, filePath: String): Bitmap {
+        context.assets.open(filePath).use { inputStream ->
+            return BitmapFactory.decodeStream(inputStream)
+        }
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
