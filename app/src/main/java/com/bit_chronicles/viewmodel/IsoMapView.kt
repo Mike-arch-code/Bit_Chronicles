@@ -7,7 +7,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.bit_chronicles.model.MapGenerator
-import com.bit_chronicles.R
+
 
 class IsoMapView @JvmOverloads constructor(
     context: Context,
