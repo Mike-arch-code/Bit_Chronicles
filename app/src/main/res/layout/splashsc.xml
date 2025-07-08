@@ -10,22 +10,23 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="382dp"
-        android:layout_height="406dp"
-        android:scaleType="fitCenter"
+        android:layout_width="316dp"
+        android:layout_height="358dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:src="@drawable/logo"
-        tools:src="@drawable/logo" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/logoclaro"
+        tools:src="@drawable/logoclaro" />
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="399dp"
-        android:layout_height="152dp"
-        android:cropToPadding="false"
+        android:layout_width="355dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="65dp"
+        android:cropToPadding="false"
         android:scaleType="fitCenter"
-        android:src="@drawable/tipologo"
-        tools:src="@drawable/tipologo" />
+        android:src="@drawable/tyopilogoclaro"
+        tools:src="@drawable/tyopilogoclaro" />
 
 </LinearLayout>
