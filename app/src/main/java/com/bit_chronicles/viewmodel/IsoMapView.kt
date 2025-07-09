@@ -24,12 +24,15 @@ class IsoMapView @JvmOverloads constructor(
     private val tileObstacle = BitmapFactory.decodeResource(resources, R.drawable.water )
     private val tilePlayer = BitmapFactory.decodeResource(resources, R.drawable.grassplayer)
 
-    private val selectedTilePaint = Paint().apply {
-        color = Color.YELLOW
-        style = Paint.Style.STROKE
-        strokeWidth = 6f
-        isAntiAlias = true
-    }
+
+    //funcion para colorear cuadrados
+
+//    private val selectedTilePaint = Paint().apply {
+//        color = Color.YELLOW
+//        style = Paint.Style.STROKE
+//        strokeWidth = 6f
+//        isAntiAlias = true
+//    }
 
     private var selectedRow = -1
     private var selectedCol = -1
@@ -39,11 +42,12 @@ class IsoMapView @JvmOverloads constructor(
     private var playerMapRow = 50
     private var playerMapCol = 50
 
-    private fun loadBitmapFromAssets(context: Context, filePath: String): Bitmap {
-        context.assets.open(filePath).use { inputStream ->
-            return BitmapFactory.decodeStream(inputStream)
-        }
-    }
+// funcion para cargar bitmaps desde assets
+//    private fun loadBitmapFromAssets(context: Context, filePath: String): Bitmap {
+//        context.assets.open(filePath).use { inputStream ->
+//            return BitmapFactory.decodeStream(inputStream)
+//        }
+//    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -59,7 +63,7 @@ class IsoMapView @JvmOverloads constructor(
                 val screenX = (col - row) * tileWidth / 2 + offsetX
                 val screenY = (col + row) * tileHeight / 2 + offsetY
 
-                val isPlayer = row == 2 && col == 2
+                val isPlayer = row == 5 && col == 5
 
                 val bitmap = when {
                     isPlayer -> tilePlayer
