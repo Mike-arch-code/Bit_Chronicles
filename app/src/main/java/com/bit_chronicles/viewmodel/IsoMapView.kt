@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import com.bit_chronicles.R
 import com.bit_chronicles.model.MapGenerator
 
 
@@ -16,12 +17,12 @@ class IsoMapView @JvmOverloads constructor(
 
     private val tileWidth = 128
     private val tileHeight = 64
-    private val visibleSize = 8
+    private val visibleSize = 10
 
-    private val tileGrass = loadBitmapFromAssets(context, "tilesmapa/grass")
-    private val tileEnemy = loadBitmapFromAssets(context, "tilesmapa/roca.png")
-    private val tileObstacle = loadBitmapFromAssets(context, "tilesmapa/water.png")
-    private val tilePlayer = loadBitmapFromAssets(context, "player/grassplayer.png")
+    private val tileGrass = BitmapFactory.decodeResource(resources, R.drawable.grass)
+    private val tileEnemy = BitmapFactory.decodeResource(resources, R.drawable.roca )
+    private val tileObstacle = BitmapFactory.decodeResource(resources, R.drawable.water )
+    private val tilePlayer = BitmapFactory.decodeResource(resources, R.drawable.grassplayer)
 
     private val selectedTilePaint = Paint().apply {
         color = Color.YELLOW
