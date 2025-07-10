@@ -64,12 +64,20 @@ class MapActivity : AppCompatActivity() {
 
         if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
             val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-            val text = result?.firstOrNull() ?: return
+            val text = result?.firstOrNull()?.lowercase(Locale.ROOT) ?: return
 
-            Log.d("SpeechRecognizer", "Texto reconocido (fallback): $text") // ✅ VER QUÉ RECONOCIÓ
+            Log.d("SpeechRecognizer", "Texto reconocido: $text")
 
-            val prompt = VoiceCommandPrompt(text).build()
-            apiService.sendPrompt(prompt)
+            // Si reconoce caminar o mover, ejecuta acción directa sin IA
+            if ("caminar" in text || "mover" in text) {
+                Log.d("SpeechRecognizer", "Comando directo detectado: $text")
+                tryMovePlayer()
+            } else {
+                // Si no, envía el texto a la IA
+                val prompt = VoiceCommandPrompt(text).build()
+                Log.d("Prompt", "Enviando prompt a IA: $prompt")
+                apiService.sendPrompt(prompt)
+            }
         }
     }
 
@@ -99,13 +107,19 @@ class MapActivity : AppCompatActivity() {
         val selectedRow = isoMapView.getSelectedRow()
         val selectedCol = isoMapView.getSelectedCol()
 
+        Log.d("MapMove", "SelectedRow: $selectedRow, SelectedCol: $selectedCol")
+
         if (selectedRow != -1 && selectedCol != -1) {
             val deltaRow = selectedRow - 3
             val deltaCol = selectedCol - 3
             val targetRow = isoMapView.playerMapRow + deltaRow
             val targetCol = isoMapView.playerMapCol + deltaCol
 
+            Log.d("MapMove", "Moviendo a fila=$targetRow, columna=$targetCol")
+
             isoMapView.animatePlayerSmoothlyTo(targetRow, targetCol, speedPerTileMs = 600L)
+        } else {
+            Log.w("MapMove", "No hay celda seleccionada para moverse")
         }
     }
 

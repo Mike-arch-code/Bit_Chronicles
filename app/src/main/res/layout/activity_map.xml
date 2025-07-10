@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.6" />
 
-    <!-- Controles y botón de voz -->
+    <!-- Contenedor con botón y preview de imagen -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -27,6 +27,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="🎤 Hablar" />
+
+        <ImageView
+            android:id="@+id/imageViewPreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" />
     </LinearLayout>
 </LinearLayout>
-
