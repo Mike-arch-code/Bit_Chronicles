@@ -26,4 +26,3 @@ class HomeActivity : AppCompatActivity() {
     }
 }
 
-private fun Int.setOnClickListener(function: () -> Unit) {}
