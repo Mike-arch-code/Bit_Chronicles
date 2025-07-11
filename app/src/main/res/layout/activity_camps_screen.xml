@@ -1,22 +1,27 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="16dp"
+    android:paddingTop="0dp"
     android:background="@android:color/white">
+
 
     <LinearLayout
         android:id="@+id/campaignContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="32dp">
+        android:layout_gravity="top"
 
+
+       >
 
         <include
             layout="@layout/navbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" />
+            android:layout_height="50dp"
+            android:layout_gravity="top"
+            />
+
 
         <Button
             android:id="@+id/btnVerCampanias"
