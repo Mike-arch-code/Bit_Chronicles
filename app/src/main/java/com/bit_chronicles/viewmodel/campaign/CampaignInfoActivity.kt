@@ -1,13 +1,14 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.campaign
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.model.firebase.RealTime
-import android.content.Intent
-import android.widget.Button
+import com.bit_chronicles.viewmodel.map.MapActivity
 
 class CampaignInfoActivity : AppCompatActivity() {
 

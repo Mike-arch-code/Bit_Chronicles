@@ -1,8 +1,13 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.map
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent

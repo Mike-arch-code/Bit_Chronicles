@@ -1,4 +1,4 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.character
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,10 +1,11 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.auth
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
+import com.bit_chronicles.viewmodel.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,4 +19,3 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 }
-

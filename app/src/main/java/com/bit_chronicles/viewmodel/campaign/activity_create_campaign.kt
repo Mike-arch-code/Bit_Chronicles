@@ -1,4 +1,4 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.campaign
 
 import android.os.Bundle
 import android.widget.Button
@@ -11,9 +11,9 @@ import com.bit_chronicles.R
 import com.bit_chronicles.model.AdventurePrompt
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.model.firebase.AdventureRepository
+import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.getValue
 
 class activity_create_campaign : AppCompatActivity() {
 

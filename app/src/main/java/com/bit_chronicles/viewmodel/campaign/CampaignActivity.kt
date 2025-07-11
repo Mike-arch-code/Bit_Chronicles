@@ -1,16 +1,14 @@
-
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.campaign
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.model.firebase.RealTime
+import com.bit_chronicles.viewmodel.campaign.CampaignListActivity
+import com.bit_chronicles.viewmodel.campaign.activity_create_campaign
 
 class CampaignActivity : AppCompatActivity() {
 
@@ -39,4 +37,3 @@ class CampaignActivity : AppCompatActivity() {
     }
 
 }
-

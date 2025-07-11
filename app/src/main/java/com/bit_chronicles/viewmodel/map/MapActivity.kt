@@ -1,5 +1,6 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.map
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -12,8 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
 import com.bit_chronicles.model.VoiceCommandPrompt
 import com.bit_chronicles.model.api.ApiService
+import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 
 class MapActivity : AppCompatActivity() {
 
@@ -34,12 +36,12 @@ class MapActivity : AppCompatActivity() {
     }
 
     private fun checkAudioPermission() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.RECORD_AUDIO)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
             != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.RECORD_AUDIO),
+                arrayOf(Manifest.permission.RECORD_AUDIO),
                 1
             )
         }

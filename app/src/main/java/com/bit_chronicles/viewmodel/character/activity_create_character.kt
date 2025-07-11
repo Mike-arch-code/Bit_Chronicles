@@ -1,4 +1,4 @@
-package com.bit_chronicles.viewmodel
+package com.bit_chronicles.viewmodel.character
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
