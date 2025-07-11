@@ -12,27 +12,44 @@ class CharacterPrompt(
 ) {
     fun buildPromptString(): String {
         return """
-            Eres un diseñador experto en creación de personajes jugables para juegos de rol de fantasía.
+            Eres un generador experto de personajes para Dungeons & Dragons 5e.
 
-            Con los siguientes datos, genera una ficha descriptiva breve que incluya:
+            Crea la ficha de personaje a nivel 1 con base en los siguientes datos:
 
-            1. **Introducción temática (máx. 4 líneas)**: Presentación atractiva del personaje con una idea clara de quién es.
-            2. **Habilidades clave**: Lista de las habilidades o talentos destacables y cómo se reflejan en el juego (máx. 3 habilidades).
-            3. **Rasgos de personalidad**: Cómo influye su personalidad en decisiones o interacción con el grupo.
-            4. **Motivación**: Qué lo impulsa y cómo eso puede integrarse en la narrativa o las misiones.
-
-            Datos del personaje:
             - Nombre: $name
             - Raza: $race
             - Clase: $characterClass
             - Trasfondo: $background
             - Alineamiento: $alignment
             - Rasgos de personalidad: $personalityTraits
-            - Habilidades: $abilities
-            - Motivación: $motivation
+            - Habilidades iniciales (no estadísticas): $abilities
+            - Motivación personal: $motivation
 
-            El resultado debe ser conciso, organizado, sin clichés genéricos, ideal para presentarlo a un grupo antes de iniciar una campaña.
+            Formato de salida requerido (no agregues explicaciones ni historia libre):
+
+            Nombre: [nombre]  
+            Raza: [raza]  
+            Clase: [clase]  
+            Nivel: 1  
+            HP: [puntos de golpe]  
+            CA: [clase de armadura]  
+            Velocidad: [pies]  
+            Alineamiento: [alineamiento]  
+            Personalidad: [frase corta]  
+            Motivación: [frase corta]  
+            Estadísticas: Fuerza [x], Destreza [x], Constitución [x], Inteligencia [x], Sabiduría [x], Carisma [x]  
+            Bonificador de Competencia: +2  
+            Tiradas de Salvación: [atributo] +[x], ...  
+            Habilidades: [nombre] +[x], ...  
+            Ataques:  
+            - [arma]: +[x] al ataque, [daño] daño [tipo]  
+            Habilidades Especiales:  
+            - [nombre]: [descripción]  
+            Equipo: [lista de objetos importantes]  
+            Mochila: [contenido de la mochila de aventurero o ladrón]  
+            Oro: [número] PO
+
+            No inventes una historia extensa. Solo responde con el contenido formateado como si fuera una ficha para cargar en una app.
         """.trimIndent()
     }
 }
-
