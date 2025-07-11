@@ -12,7 +12,7 @@ object AdventureRepository {
         userId: String,
         worldName: String,
         metadata: Map<String, Any>,
-        prompt: String,
+        historia: String,
         onSuccess: () -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
@@ -22,16 +22,11 @@ object AdventureRepository {
         // Guardar metadata
         db.write("$basePath/metadata", metadata, onSuccess, onError)
 
-        // Guardar prompt original
-        db.write("$basePath/historia/prompt", prompt)
+        // Guardar historia directamente
+        db.write("$basePath/historia", historia)
 
-        // Crear carpeta de chat con mensaje inicial del sistema (IA)
-        val initialMessage = mapOf(
-            "sender" to "dm",
-            "message" to "Hola, bienvenido al mundo de $worldName.",
-            "timestamp" to System.currentTimeMillis()
-        )
-        db.write("$basePath/chat/0", initialMessage)
+        // Crear chat vacío (sin mensaje de bienvenida)
+        db.write("$basePath/chat", mapOf<String, Any>())
     }
 
     fun addMessageToChat(
@@ -49,6 +44,23 @@ object AdventureRepository {
             "message" to message,
             "timestamp" to System.currentTimeMillis()
         )
+        db.write(path, msg, onSuccess, onError)
+    }
+
+    // Puedes llamar esto desde otra pestaña para dejar mensaje inicial
+    fun addInitialMessage(
+        userId: String,
+        worldName: String,
+        message: String = "Bienvenido al mundo de $worldName.",
+        onSuccess: () -> Unit = {},
+        onError: (Exception) -> Unit = {}
+    ) {
+        val msg = mapOf(
+            "sender" to "dm",
+            "message" to message,
+            "timestamp" to System.currentTimeMillis()
+        )
+        val path = "aventuras/$userId/$worldName/chat/0"
         db.write(path, msg, onSuccess, onError)
     }
 }

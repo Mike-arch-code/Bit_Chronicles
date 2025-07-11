@@ -14,4 +14,48 @@
     <string name="crear_campa_a">CREAR CAMPAÑA</string>
     <string name="crear_personaje">Crear Personaje</string>
     <string name="nombre_del_personaje">Nombre del Personaje</string>
+    <string-array name="setting_types">
+        <item>Medieval</item>
+        <item>Moderna</item>
+        <item>Ciberpunk</item>
+    </string-array>
+
+    <string-array name="tone_types">
+        <item>Épico</item>
+        <item>Oscuro</item>
+        <item>Humorístico</item>
+        <item>Trágico</item>
+        <item>Bélico</item>
+    </string-array>
+
+    <string-array name="power_systems">
+        <item>Magia arcana</item>
+        <item>Magia divina</item>
+        <item>Tecnología</item>
+        <item>Psiónica</item>
+        <item>Sin poderes</item>
+    </string-array>
+
+    <string-array name="conflict_types">
+        <item>Política</item>
+        <item>Guerra</item>
+        <item>Religioso</item>
+        <item>Exploración</item>
+        <item>Invasión</item>
+    </string-array>
+
+    <string name="nombre_del_mundo">Nombre del mundo</string>
+    <string name="ambientacion">Ambientación</string>
+    <string name="tono_narrativo">Tono narrativo</string>
+    <string name="sistema_de_poder">Sistema de poder</string>
+    <string name="razas_dominantes">Razas o facciones dominantes</string>
+    <string name="conflicto_principal">Conflicto principal</string>
+    <string name="lugares_clave">Lugares clave</string>
+    <string name="personajes_importantes">Personajes importantes</string>
+    <string name="ganchos_narrativos">Ganchos narrativos</string>
+    <string name="objetivo_jugadores">Objetivo de los jugadores</string>
+    <string name="historia_del_mundo">Historia del mundo</string>
+    <string name="crear_campaña">Crear Campaña</string>
+    <string name="result_placeholder">Resultado...</string>
+
 </resources>
