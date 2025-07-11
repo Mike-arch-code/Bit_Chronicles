@@ -4,111 +4,134 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ponle un nombre a tu mundo" />
-
+        <!-- Nombre del mundo -->
         <EditText
             android:id="@+id/editWorldName"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/roundedbutton2"
-            android:hint="   Nombre del mundo" />
+            android:layout_height="wrap_content"
+            android:hint="@string/nombre_del_mundo"
+            android:inputType="text"
+            android:minHeight="48dp"
+            android:autofillHints="name" />
 
+        <!-- Ambientación -->
         <TextView
-            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Un tipo de ambientacion Ej.Medieval,futurista
-            (Periodo temporal)" />
-
-        <EditText
-            android:id="@+id/editSettingType"
+            android:text="@string/ambientacion" />
+        <Spinner
+            android:id="@+id/spinnerSetting"
             android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/roundedbutton2"
-            android:hint="   Tipo de ambientación" />
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/editTone"
+        <!-- Tono narrativo -->
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/roundedbutton2"
-            android:hint="  Tono narrativo (épico, oscuro, etc.)" />
-
-        <EditText
-            android:id="@+id/editPowerSystem"
+            android:layout_height="wrap_content"
+            android:text="@string/tono_narrativo" />
+        <Spinner
+            android:id="@+id/spinnerTone"
             android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/roundedbutton2"
-            android:hint="  Magia o tecnología" />
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
 
+        <!-- Sistema de poder -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sistema_de_poder" />
+        <Spinner
+            android:id="@+id/spinnerPower"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
+        <!-- Razas o facciones -->
         <EditText
             android:id="@+id/editDominantRaces"
             android:layout_width="match_parent"
-            android:layout_height="39dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/roundedbutton2"
-            android:hint="  Razas dominantes o facciones" />
+            android:layout_height="wrap_content"
+            android:hint="@string/razas_dominantes"
+            android:inputType="text"
+            android:minHeight="48dp" />
 
+        <!-- Conflicto principal -->
         <TextView
-            android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="  Este espacio tendrá en cuenta tu elección de razas o facciones para generar dinámicas entre estas" />
+            android:text="@string/conflicto_principal" />
+        <Spinner
+            android:id="@+id/spinnerConflict"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
 
+        <!-- Lugares clave -->
         <EditText
-            android:id="@+id/editMainConflict"
-            android:layout_width="match_parent"
-            android:layout_height="36dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/roundedbutton2"
-            android:hint="  Conflicto principal" />
-
-        <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/editKeyLocations"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="  Especifica una historia o lore o deja que el game master lo cree por ti" />
+            android:hint="@string/lugares_clave"
+            android:inputType="text"
+            android:minHeight="48dp" />
 
+        <!-- Personajes importantes -->
+        <EditText
+            android:id="@+id/editKeyCharacters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/personajes_importantes"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Ganchos narrativos -->
+        <EditText
+            android:id="@+id/editHooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ganchos_narrativos"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Objetivo del grupo -->
+        <EditText
+            android:id="@+id/editObjective"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/objetivo_jugadores"
+            android:inputType="text"
+            android:minHeight="48dp" />
+
+        <!-- Lore del mundo -->
         <EditText
             android:id="@+id/editWorldLore"
             android:layout_width="match_parent"
-            android:layout_height="77dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/roundedbutton2"
-            android:gravity="top"
-            android:hint="  Historia o lore del mundo"
+            android:layout_height="120dp"
+            android:hint="@string/historia_del_mundo"
             android:inputType="textMultiLine"
-            android:minLines="3" />
+            android:gravity="top"
+            android:minHeight="48dp" />
 
+        <!-- Botón enviar -->
         <Button
             android:id="@+id/sendButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="Enviar Prompt"
-            android:background="@drawable/roundedbutton"/>
+            android:text="@string/crear_campaña"
+            android:minHeight="48dp" />
 
+        <!-- Resultado -->
         <TextView
             android:id="@+id/responseTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Respuesta aparecerá aquí..."
-            android:layout_marginTop="24dp"
-            android:padding="8dp" />
+            android:text="@string/result_placeholder"
+            android:paddingTop="16dp" />
     </LinearLayout>
 </ScrollView>
