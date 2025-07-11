@@ -1,9 +1,7 @@
 package com.bit_chronicles.viewmodel.campaign
 
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -17,30 +15,57 @@ import kotlinx.coroutines.launch
 
 class activity_create_campaign : AppCompatActivity() {
 
-    private val ApiService: ApiService by viewModels()
+    private val apiService: ApiService by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creat_camp)
+
         val sendButton = findViewById<Button>(R.id.sendButton)
         val responseTextView = findViewById<TextView>(R.id.responseTextView)
 
         val editWorldName = findViewById<EditText>(R.id.editWorldName)
-        val editSettingType = findViewById<EditText>(R.id.editSettingType)
         val editDominantRaces = findViewById<EditText>(R.id.editDominantRaces)
-        val editPowerSystem = findViewById<EditText>(R.id.editPowerSystem)
-        val editMainConflict = findViewById<EditText>(R.id.editMainConflict)
         val editWorldLore = findViewById<EditText>(R.id.editWorldLore)
-        val editTone = findViewById<EditText>(R.id.editTone)
+        val editKeyCharacters = findViewById<EditText>(R.id.editKeyCharacters)
+        val editKeyLocations = findViewById<EditText>(R.id.editKeyLocations)
+        val editHooks = findViewById<EditText>(R.id.editHooks)
+        val editObjective = findViewById<EditText>(R.id.editObjective)
+
+        val spinnerSetting = findViewById<Spinner>(R.id.spinnerSetting)
+        val spinnerPower = findViewById<Spinner>(R.id.spinnerPower)
+        val spinnerConflict = findViewById<Spinner>(R.id.spinnerConflict)
+        val spinnerTone = findViewById<Spinner>(R.id.spinnerTone)
+
+        ArrayAdapter.createFromResource(this, R.array.setting_types, android.R.layout.simple_spinner_item).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerSetting.adapter = it
+        }
+        ArrayAdapter.createFromResource(this, R.array.power_systems, android.R.layout.simple_spinner_item).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerPower.adapter = it
+        }
+        ArrayAdapter.createFromResource(this, R.array.conflict_types, android.R.layout.simple_spinner_item).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerConflict.adapter = it
+        }
+        ArrayAdapter.createFromResource(this, R.array.tone_types, android.R.layout.simple_spinner_item).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerTone.adapter = it
+        }
 
         sendButton.setOnClickListener {
             val worldName = editWorldName.text.toString().trim()
-            val settingType = editSettingType.text.toString().trim()
+            val settingType = spinnerSetting.selectedItem.toString()
             val dominantRaces = editDominantRaces.text.toString().trim()
-            val powerSystem = editPowerSystem.text.toString().trim()
-            val mainConflict = editMainConflict.text.toString().trim()
+            val powerSystem = spinnerPower.selectedItem.toString()
+            val mainConflict = spinnerConflict.selectedItem.toString()
             val worldLore = editWorldLore.text.toString().trim()
-            val tone = editTone.text.toString().trim()
+            val tone = spinnerTone.selectedItem.toString()
+            val keyCharacters = editKeyCharacters.text.toString().trim()
+            val keyLocations = editKeyLocations.text.toString().trim()
+            val hooks = editHooks.text.toString().trim()
+            val objective = editObjective.text.toString().trim()
 
             val prompt = AdventurePrompt(
                 worldName,
@@ -49,43 +74,52 @@ class activity_create_campaign : AppCompatActivity() {
                 powerSystem,
                 mainConflict,
                 worldLore,
-                tone
+                tone,
+                hooks,
+                keyCharacters,
+                keyLocations,
+                objective
             ).buildPromptString()
 
             if (prompt.isNotBlank()) {
-                val metadata = mapOf(
-                    "worldName" to worldName,
-                    "settingType" to settingType,
-                    "dominantRaces" to dominantRaces,
-                    "powerSystem" to powerSystem,
-                    "mainConflict" to mainConflict,
-                    "worldLore" to worldLore,
-                    "tone" to tone,
-                    "createdAt" to System.currentTimeMillis()
-                )
-
-                val userId = "Mike"
-                val adventureId = worldName // puedes usar un UUID si prefieres
-
-                AdventureRepository.createAdventure(userId, adventureId, metadata, prompt)
-                AdventureRepository.addMessageToChat(userId, adventureId, "1", "dm", "Hola, bienvenido a tu aventura.")
-
-                ApiService.sendPrompt(prompt)
+                apiService.sendPrompt(prompt)
             }
         }
 
         lifecycleScope.launch {
-            ApiService.uiState.collectLatest { state ->
+            apiService.uiState.collectLatest { state ->
                 when (state) {
                     is UiState.Initial -> responseTextView.text = ""
                     is UiState.Loading -> responseTextView.text = "Cargando..."
                     is UiState.Success -> {
                         responseTextView.text = state.response
+
+                        val worldName = findViewById<EditText>(R.id.editWorldName).text.toString().trim()
+
+                        val metadata = mapOf(
+                            "worldName" to worldName,
+                            "settingType" to findViewById<Spinner>(R.id.spinnerSetting).selectedItem.toString(),
+                            "dominantRaces" to findViewById<EditText>(R.id.editDominantRaces).text.toString().trim(),
+                            "powerSystem" to findViewById<Spinner>(R.id.spinnerPower).selectedItem.toString(),
+                            "mainConflict" to findViewById<Spinner>(R.id.spinnerConflict).selectedItem.toString(),
+                            "worldLore" to findViewById<EditText>(R.id.editWorldLore).text.toString().trim(),
+                            "tone" to findViewById<Spinner>(R.id.spinnerTone).selectedItem.toString(),
+                            "createdAt" to System.currentTimeMillis()
+                        )
+
                         val userId = "Mike"
-                        val adventureId = editWorldName.text.toString().trim()
-                        AdventureRepository.addMessageToChat(userId, adventureId, "2", "dm", state.response)
+                        val adventureId = worldName
+
+                        AdventureRepository.createAdventure(userId, adventureId, metadata, state.response)
                     }
-                    is UiState.Error -> responseTextView.text = "Error: ${state.message}"
+                    is UiState.Error -> {
+                        val friendlyMessage = if (state.message.contains("503")) {
+                            "El modelo está sobrecargado. Intenta de nuevo más tarde."
+                        } else {
+                            "Error: ${state.message}"
+                        }
+                        responseTextView.text = friendlyMessage
+                    }
                 }
             }
         }
