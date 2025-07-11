@@ -9,11 +9,15 @@
     android:gravity="center"
     android:orientation="vertical">
 
+
     <include
-        layout="@layout/titlename"
+        layout="@layout/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="-80dp"/>
+        android:layout_marginTop="-10dp"
+      />
+
+
 
     <ImageView
         android:id="@+id/imageView"

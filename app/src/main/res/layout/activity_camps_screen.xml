@@ -11,11 +11,12 @@
         android:orientation="vertical"
         android:paddingBottom="32dp">
 
-        <include
-            layout="@layout/titlename"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
+        <include
+            layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
         <Button
             android:id="@+id/btnVerCampanias"
