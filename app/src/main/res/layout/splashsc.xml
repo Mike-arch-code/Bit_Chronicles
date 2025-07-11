@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="316dp"
-        android:layout_height="358dp"
+        android:layout_width="284dp"
+        android:layout_height="326dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
         android:scaleType="fitCenter"
@@ -20,10 +20,10 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="355dp"
-        android:layout_height="wrap_content"
+        android:layout_width="295dp"
+        android:layout_height="74dp"
         android:layout_gravity="center"
-        android:layout_marginTop="65dp"
+        android:layout_marginTop="90dp"
         android:cropToPadding="false"
         android:scaleType="fitCenter"
         android:src="@drawable/tyopilogoclaro"

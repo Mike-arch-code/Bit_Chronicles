@@ -4,11 +4,20 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+
         android:id="@+id/campaignListContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp" >
+        android:padding="0dp" >
+
+        <include
+            layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+
+            android:layout_gravity="top"
+            />
 
         <TextView
             android:id="@+id/textView2"

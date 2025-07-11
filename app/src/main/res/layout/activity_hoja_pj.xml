@@ -7,68 +7,71 @@
     android:layout_height="match_parent"
     tools:context=".CharacterViewActivity">
 
+    <include
+        layout="@layout/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        />
+
     <!-- Imagen del personaje -->
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="150dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_personaje"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
 
     <!-- Botón 1 -->
 
     <!-- Botón 2 -->
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="185dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/roundedbutton"
-        android:text="Botón 1"
-        app:layout_constraintStart_toEndOf="@id/imageView2"
-        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Botón 3 -->
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="185dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/roundedbutton"
-        android:text="Botón 3"
-        app:layout_constraintStart_toStartOf="@id/button2"
-        app:layout_constraintTop_toBottomOf="@id/button2" />
+    <!-- Caja gris -->
+
+    <!-- Botón final -->
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="344dp"
+        android:layout_height="198dp"
+        android:layout_marginTop="36dp"
+        android:background="@color/gris"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.437"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="185dp"
         android:layout_height="48dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="4dp"
 
+        android:layout_marginTop="20dp"
         android:background="@drawable/roundedbutton"
         android:text="Botón 2"
         app:layout_constraintStart_toStartOf="@id/button5"
         app:layout_constraintTop_toBottomOf="@id/button5" />
 
-    <!-- Botón 3 -->
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="185dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="104dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Botón 1"
+        app:layout_constraintStart_toEndOf="@id/imageView2"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Caja gris -->
-    <FrameLayout
-        android:id="@+id/frameLayout"
-        android:layout_width="344dp"
-        android:layout_height="198dp"
-        android:layout_marginTop="32dp"
-        android:background="@color/gris"
-        app:layout_constraintTop_toBottomOf="@id/imageView2"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="128dp"
+        android:layout_height="183dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="104dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_personaje"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Botón final -->
     <Button
         android:id="@+id/button6"
         android:layout_width="316dp"
@@ -77,9 +80,22 @@
         android:layout_marginBottom="32dp"
         android:background="@drawable/roundedbutton"
         android:text="Botón final"
-        app:layout_constraintTop_toBottomOf="@id/frameLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintHorizontal_bias="0.477"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/frameLayout"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="185dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/roundedbutton"
+        android:text="Botón 3"
+        app:layout_constraintStart_toStartOf="@id/button2"
+        app:layout_constraintTop_toBottomOf="@id/button2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

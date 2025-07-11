@@ -4,14 +4,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:paddingTop="16dp"
+    android:paddingTop="0dp"
     android:background="@android:color/white">
 
-    <!-- Título -->
     <include
-        layout="@layout/titlename"
+        layout="@layout/navbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="50dp"
+        android:layout_gravity="top"
+        />
 
     <!-- Subtítulo -->
 
