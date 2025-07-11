@@ -16,7 +16,7 @@ class ApiService : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Initial)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
     private val generativeModel = GenerativeModel(
-        modelName = "gemini-1.5-flash",
+        modelName = "gemini-2.5-flash",
         apiKey = BuildConfig.apiKey
     )
     fun sendPrompt(prompt: String) {
