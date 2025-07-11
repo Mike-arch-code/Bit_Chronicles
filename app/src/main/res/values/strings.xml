@@ -58,4 +58,51 @@
     <string name="crear_campaña">Crear Campaña</string>
     <string name="result_placeholder">Resultado...</string>
 
+    <string name="import_image">Importar imagen</string>
+    <string name="character_name_hint">Nombre del personaje</string>
+    <string name="race_label">Raza</string>
+    <string name="class_label">Clase o Rol</string>
+    <string name="background_label">Trasfondo</string>
+    <string name="alignment_label">Alineación</string>
+    <string name="personality_traits_hint">Rasgos de personalidad</string>
+    <string name="abilities_hint">Habilidades (máximo 3)</string>
+    <string name="motivation_hint">Motivación del personaje</string>
+    <string name="create_character_button">Crear Personaje</string>
+    <string name="default_character_response">Aquí aparecerá la ficha del personaje...</string>
+
+    <!-- Alineaciones -->
+    <string name="alignment_legal">Legal</string>
+    <string name="alignment_neutral">Neutral</string>
+    <string name="alignment_chaotic">Caótico</string>
+    <string name="moral_good">Bueno</string>
+    <string name="moral_neutral">Neutral</string>
+    <string name="moral_evil">Malvado</string>
+
+    <string-array name="races">
+        <item>Humano</item>
+        <item>Elfo</item>
+        <item>Enano</item>
+        <item>Orco</item>
+        <item>Tiefling</item>
+        <item>Dragonborn</item>
+    </string-array>
+
+    <string-array name="classes">
+        <item>Guerrero</item>
+        <item>Mago</item>
+        <item>Pícaro</item>
+        <item>Clérigo</item>
+        <item>Druida</item>
+        <item>Bardo</item>
+    </string-array>
+
+    <string-array name="backgrounds">
+        <item>Héroe Caído</item>
+        <item>Erudito</item>
+        <item>Forajido</item>
+        <item>Mercenario</item>
+        <item>Noble</item>
+        <item>Superviviente</item>
+    </string-array>
+
 </resources>

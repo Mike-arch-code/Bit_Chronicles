@@ -14,7 +14,7 @@ class CampaignActivity : AppCompatActivity() {
 
     private lateinit var campaignContainer: LinearLayout
     private val db = RealTime()
-    private val userId = "mike" // Ajusta con tu lógica de usuario real
+    private val userId = "mike"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
