@@ -18,34 +18,33 @@ class CampaignInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_campaign_info)
 
-        val userId = "Mike" // Puedes hacerlo dinámico si tienes auth
+        val userId = "Mike" // Reemplazar por autenticación real si aplica
         val campaignName = intent.getStringExtra("campaignName") ?: return
 
         val tvInfo = findViewById<TextView>(R.id.tvCampaignInfo)
 
-        db.getCampaignInfo(userId, campaignName,
+        db.getCampaignInfo(
+            userId,
+            campaignName,
             onResult = { data ->
                 val builder = StringBuilder()
                 builder.append("🌍 Campaña: $campaignName\n\n")
-                builder.append("📜 Prompt:\n${data["prompt"]}\n\n")
-                builder.append("📘 Metadata:\n")
 
-                data.filterKeys { it != "prompt" }.forEach { (key, value) ->
-                    builder.append("$key: ${value ?: "-"}\n")
-                }
+                val historia = data["historia"] as? String ?: "No se encontró la historia."
+                builder.append("📜 Historia:\n$historia")
 
                 tvInfo.text = builder.toString()
             },
             onError = {
                 Log.e("CampaignInfoActivity", "Error: ${it.message}")
-                tvInfo.text = "Error al cargar la información"
+                tvInfo.text = "❌ Error al cargar la información de la campaña"
             }
         )
+
         val playButton = findViewById<Button>(R.id.btnPlayCampaign)
         playButton.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             startActivity(intent)
         }
-
     }
 }

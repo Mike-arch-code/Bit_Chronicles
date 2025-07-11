@@ -84,26 +84,26 @@ class RealTime {
     fun getCampaignInfo(
         userId: String,
         campaignName: String,
-        onResult: (Map<String, Any?>) -> Unit,
+        onResult: (Map<String, String>) -> Unit,
         onError: (Exception) -> Unit = {}
     ) {
-        val path = "aventuras/$userId/$campaignName"
+        val path = "aventuras/$userId/$campaignName/historia"
 
         rootRef.child(path).get()
             .addOnSuccessListener { snapshot ->
-                val prompt = snapshot.child("historia/prompt").value as? String ?: ""
-                val metadata = snapshot.child("metadata").value as? Map<String, Any?> ?: emptyMap()
-
-                val result = metadata.toMutableMap()
-                result["prompt"] = prompt
-
+                val historia = snapshot.value as? String ?: ""
+                val result = mapOf(
+                    "campaignName" to campaignName,
+                    "historia" to historia
+                )
                 onResult(result)
             }
             .addOnFailureListener { exception ->
-                Log.e("RealTime", "Error al obtener info campaña: ${exception.message}")
+                Log.e("RealTime", "Error al obtener historia: ${exception.message}")
                 onError(exception)
             }
     }
+
 
 
 }
