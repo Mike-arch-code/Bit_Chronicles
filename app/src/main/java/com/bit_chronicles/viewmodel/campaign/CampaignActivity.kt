@@ -6,15 +6,10 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
-import com.bit_chronicles.model.firebase.RealTime
-import com.bit_chronicles.viewmodel.campaign.CampaignListActivity
-import com.bit_chronicles.viewmodel.campaign.activity_create_campaign
 
 class CampaignActivity : AppCompatActivity() {
 
     private lateinit var campaignContainer: LinearLayout
-    private val db = RealTime()
-    private val userId = "mike"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +20,7 @@ class CampaignActivity : AppCompatActivity() {
         val btnVerCampanias = findViewById<Button>(R.id.btnVerCampanias)
 
         btnCrearCampaña.setOnClickListener {
-            val intent = Intent(this, activity_create_campaign::class.java)
+            val intent = Intent(this, CreateCampaignActivity::class.java)
             startActivity(intent)
         }
         btnVerCampanias.setOnClickListener {

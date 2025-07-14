@@ -13,9 +13,14 @@ class CharacterActivity: AppCompatActivity() {
         setContentView(R.layout.activity_persons_screen)
 
         val btnCrearpersonaje = findViewById<Button>(R.id.btnCrearpersonaje)
+        val btnVerpersonajes = findViewById<Button>(R.id.btnVerPersonajes)
 
         btnCrearpersonaje.setOnClickListener {
-            val intent = Intent(this, activity_create_character::class.java)
+            val intent = Intent(this, CreateCharacterActivity::class.java)
+            startActivity(intent)
+        }
+        btnVerpersonajes.setOnClickListener {
+            val intent = Intent(this, CharacterListActivity::class.java)
             startActivity(intent)
         }
     }

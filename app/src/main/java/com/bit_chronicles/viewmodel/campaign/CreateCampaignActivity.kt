@@ -13,7 +13,7 @@ import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class activity_create_campaign : AppCompatActivity() {
+class CreateCampaignActivity : AppCompatActivity() {
 
     private val apiService: ApiService by viewModels()
 

@@ -13,7 +13,7 @@ import com.bit_chronicles.model.firebase.CharacterRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class activity_create_character : AppCompatActivity() {
+class CreateCharacterActivity : AppCompatActivity() {
 
     private lateinit var editName: EditText
     private lateinit var spinnerRace: Spinner
@@ -119,7 +119,7 @@ class activity_create_character : AppCompatActivity() {
                             "motivación" to editMotivation.text.toString().trim()
                         )
 
-                        val userId = "mike"
+                        val userId = "Mike"
 
                         CharacterRepository.saveCharacter(
                             userId = userId,
@@ -128,14 +128,14 @@ class activity_create_character : AppCompatActivity() {
                             story = story,
                             onSuccess = {
                                 Toast.makeText(
-                                    this@activity_create_character,
+                                    this@CreateCharacterActivity,
                                     "Personaje guardado en Firebase",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             },
                             onError = {
                                 Toast.makeText(
-                                    this@activity_create_character,
+                                    this@CreateCharacterActivity,
                                     "Error al guardar personaje: ${it.message}",
                                     Toast.LENGTH_SHORT
                                 ).show()

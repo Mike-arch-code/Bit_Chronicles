@@ -27,11 +27,13 @@
         <activity android:name=".viewmodel.home.HomeActivity"/>
         <activity android:name=".viewmodel.character.CharacterActivity"/>
         <activity android:name=".viewmodel.campaign.CampaignActivity"/>
-        <activity android:name=".viewmodel.campaign.activity_create_campaign"/>
-        <activity android:name=".viewmodel.character.activity_create_character"/>
+        <activity android:name=".viewmodel.campaign.CreateCampaignActivity"/>
+        <activity android:name=".viewmodel.character.CreateCharacterActivity"/>
         <activity android:name=".viewmodel.campaign.CampaignListActivity"/>
         <activity android:name=".viewmodel.campaign.CampaignInfoActivity"/>
         <activity android:name=".viewmodel.map.MapActivity"/>
+        <activity android:name=".viewmodel.character.CharacterListActivity"/>
+        <activity android:name=".viewmodel.character.CharacterinfoActivity"/>
     </application>
 
 </manifest>

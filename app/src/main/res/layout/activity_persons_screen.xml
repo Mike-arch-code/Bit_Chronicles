@@ -14,21 +14,23 @@
         android:layout_gravity="top"
         />
 
-    <!-- Subtítulo -->
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btnVerPersonajes"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Personajes"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#C7B299"
+        android:padding="12dp"
+        android:text="Ver mis Personjaes"
+        android:background="@drawable/roundedbutton"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnCrearpersonaje"
-        android:layout_width="281dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="32dp"

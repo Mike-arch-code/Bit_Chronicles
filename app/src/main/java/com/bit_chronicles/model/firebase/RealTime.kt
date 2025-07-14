@@ -104,6 +104,60 @@ class RealTime {
             }
     }
 
+    fun getCharacterList(
+        userId: String,
+        onResult: (List<String>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        val path = "personajes/$userId"
+
+        rootRef.child(path).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val characterNames = mutableListOf<String>()
+
+                for (child in snapshot.children) {
+                    val characterName = child.key
+                    characterName?.let { characterNames.add(it) }
+                }
+
+                onResult(characterNames)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "Error al leer personajes para $userId: ${error.message}")
+                onError(error.toException())
+            }
+        })
+    }
+
+    fun getCharacterInfo(
+        userId: String,
+        characterName: String,
+        onResult: (Map<String, String>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        val path = "personajes/$userId/$characterName/historia"
+
+        rootRef.child(path).get()
+            .addOnSuccessListener { snapshot ->
+
+                val historia = snapshot.getValue(String::class.java) ?: ""
+                val result = mapOf(
+                    "characterName" to characterName,
+                    "historia" to historia
+                )
+                onResult(result)
+            }
+            .addOnFailureListener { exception ->
+                Log.e("RealTime", "Error al obtener historia: ${exception.message}")
+                onError(exception)
+            }
+    }
+
+
+
+
+
 
 
 }

@@ -14,19 +14,6 @@
         android:layout_gravity="top"
         />
 
-    <!-- Imagen del personaje -->
-
-
-    <!-- Botón 1 -->
-
-    <!-- Botón 2 -->
-
-    <!-- Botón 3 -->
-
-    <!-- Caja gris -->
-
-    <!-- Botón final -->
-
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="344dp"
