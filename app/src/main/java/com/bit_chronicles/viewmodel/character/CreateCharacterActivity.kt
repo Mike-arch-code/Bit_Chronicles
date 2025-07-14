@@ -1,5 +1,6 @@
 package com.bit_chronicles.viewmodel.character
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.*
@@ -10,6 +11,8 @@ import com.bit_chronicles.model.character.CharacterPrompt
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.viewmodel.UiState
 import com.bit_chronicles.model.firebase.CharacterRepository
+import com.bit_chronicles.viewmodel.campaign.CampaignInfoActivity
+import com.bit_chronicles.viewmodel.campaign.CreateCampaignActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -121,6 +124,8 @@ class CreateCharacterActivity : AppCompatActivity() {
 
                         val userId = "Mike"
 
+
+
                         CharacterRepository.saveCharacter(
                             userId = userId,
                             characterName = characterName,
@@ -141,6 +146,10 @@ class CreateCharacterActivity : AppCompatActivity() {
                                 ).show()
                             }
                         )
+
+                        val intent = Intent(this@CreateCharacterActivity, CharacterinfoActivity::class.java)
+                        intent.putExtra("characterName", characterName)
+                        startActivity(intent)
                     }
 
                     is UiState.Error -> {

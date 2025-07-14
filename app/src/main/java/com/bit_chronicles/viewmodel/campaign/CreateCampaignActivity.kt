@@ -1,5 +1,6 @@
 package com.bit_chronicles.viewmodel.campaign
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.*
 import androidx.activity.viewModels
@@ -111,6 +112,10 @@ class CreateCampaignActivity : AppCompatActivity() {
                         val adventureId = worldName
 
                         AdventureRepository.createAdventure(userId, adventureId, metadata, state.response)
+
+                        val intent = Intent(this@CreateCampaignActivity, CampaignInfoActivity::class.java)
+                        intent.putExtra("campaignName", adventureId)
+                        startActivity(intent)
                     }
                     is UiState.Error -> {
                         val friendlyMessage = if (state.message.contains("503")) {
