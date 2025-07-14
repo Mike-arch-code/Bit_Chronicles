@@ -2,6 +2,8 @@ package com.bit_chronicles.viewmodel.campaign
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +12,7 @@ import com.bit_chronicles.R
 import com.bit_chronicles.model.AdventurePrompt
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.model.firebase.AdventureRepository
+import com.bit_chronicles.model.firebase.RealTime
 import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -17,6 +20,7 @@ import kotlinx.coroutines.launch
 class CreateCampaignActivity : AppCompatActivity() {
 
     private val apiService: ApiService by viewModels()
+    private val db = RealTime()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +32,7 @@ class CreateCampaignActivity : AppCompatActivity() {
         val editWorldName = findViewById<EditText>(R.id.editWorldName)
         val editDominantRaces = findViewById<EditText>(R.id.editDominantRaces)
         val editWorldLore = findViewById<EditText>(R.id.editWorldLore)
-        val editKeyCharacters = findViewById<EditText>(R.id.editKeyCharacters)
         val editKeyLocations = findViewById<EditText>(R.id.editKeyLocations)
-        val editHooks = findViewById<EditText>(R.id.editHooks)
         val editObjective = findViewById<EditText>(R.id.editObjective)
 
         val spinnerSetting = findViewById<Spinner>(R.id.spinnerSetting)
@@ -38,6 +40,9 @@ class CreateCampaignActivity : AppCompatActivity() {
         val spinnerConflict = findViewById<Spinner>(R.id.spinnerConflict)
         val spinnerTone = findViewById<Spinner>(R.id.spinnerTone)
 
+        val spinnerPlayer = findViewById<Spinner>(R.id.spinnerplayer)
+
+        // Inicializar los spinners con recursos
         ArrayAdapter.createFromResource(this, R.array.setting_types, android.R.layout.simple_spinner_item).also {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerSetting.adapter = it
@@ -55,38 +60,55 @@ class CreateCampaignActivity : AppCompatActivity() {
             spinnerTone.adapter = it
         }
 
+        // Cargar personajes en el Spinner
+        cargarPalyer()
+
+        // Enviar prompt
         sendButton.setOnClickListener {
-            val worldName = editWorldName.text.toString().trim()
-            val settingType = spinnerSetting.selectedItem.toString()
-            val dominantRaces = editDominantRaces.text.toString().trim()
-            val powerSystem = spinnerPower.selectedItem.toString()
-            val mainConflict = spinnerConflict.selectedItem.toString()
-            val worldLore = editWorldLore.text.toString().trim()
-            val tone = spinnerTone.selectedItem.toString()
-            val keyCharacters = editKeyCharacters.text.toString().trim()
-            val keyLocations = editKeyLocations.text.toString().trim()
-            val hooks = editHooks.text.toString().trim()
-            val objective = editObjective.text.toString().trim()
+            val userId = "Mike"
+            val characterName = spinnerPlayer.selectedItem.toString()
 
-            val prompt = AdventurePrompt(
-                worldName,
-                settingType,
-                dominantRaces,
-                powerSystem,
-                mainConflict,
-                worldLore,
-                tone,
-                hooks,
-                keyCharacters,
-                keyLocations,
-                objective
-            ).buildPromptString()
+            db.getCharacterInfo(
+                userId = userId,
+                characterName = characterName,
+                onResult = { result ->
+                    val playerHistory = result["historia"] as? String ?: ""
 
-            if (prompt.isNotBlank()) {
-                apiService.sendPrompt(prompt)
-            }
+                    val worldName = editWorldName.text.toString().trim()
+                    val settingType = spinnerSetting.selectedItem.toString()
+                    val dominantRaces = editDominantRaces.text.toString().trim()
+                    val powerSystem = spinnerPower.selectedItem.toString()
+                    val mainConflict = spinnerConflict.selectedItem.toString()
+                    val worldLore = editWorldLore.text.toString().trim()
+                    val tone = spinnerTone.selectedItem.toString()
+                    val keyLocations = editKeyLocations.text.toString().trim()
+                    val objective = editObjective.text.toString().trim()
+
+                    val prompt = AdventurePrompt(
+                        worldName,
+                        settingType,
+                        dominantRaces,
+                        powerSystem,
+                        mainConflict,
+                        worldLore,
+                        tone,
+                        keyLocations,
+                        objective,
+                        playerHistory
+                    ).buildPromptString()
+
+                    if (prompt.isNotBlank()) {
+                        apiService.sendPrompt(prompt)
+                    }
+                },
+                onError = {
+                    Toast.makeText(this, "Error cargando personaje", Toast.LENGTH_SHORT).show()
+                }
+            )
         }
 
+
+        // Observar respuesta de la API
         lifecycleScope.launch {
             apiService.uiState.collectLatest { state ->
                 when (state) {
@@ -95,16 +117,16 @@ class CreateCampaignActivity : AppCompatActivity() {
                     is UiState.Success -> {
                         responseTextView.text = state.response
 
-                        val worldName = findViewById<EditText>(R.id.editWorldName).text.toString().trim()
+                        val worldName = editWorldName.text.toString().trim()
 
                         val metadata = mapOf(
                             "worldName" to worldName,
-                            "settingType" to findViewById<Spinner>(R.id.spinnerSetting).selectedItem.toString(),
-                            "dominantRaces" to findViewById<EditText>(R.id.editDominantRaces).text.toString().trim(),
-                            "powerSystem" to findViewById<Spinner>(R.id.spinnerPower).selectedItem.toString(),
-                            "mainConflict" to findViewById<Spinner>(R.id.spinnerConflict).selectedItem.toString(),
-                            "worldLore" to findViewById<EditText>(R.id.editWorldLore).text.toString().trim(),
-                            "tone" to findViewById<Spinner>(R.id.spinnerTone).selectedItem.toString(),
+                            "settingType" to spinnerSetting.selectedItem.toString(),
+                            "dominantRaces" to editDominantRaces.text.toString().trim(),
+                            "powerSystem" to spinnerPower.selectedItem.toString(),
+                            "mainConflict" to spinnerConflict.selectedItem.toString(),
+                            "worldLore" to editWorldLore.text.toString().trim(),
+                            "tone" to spinnerTone.selectedItem.toString(),
                             "createdAt" to System.currentTimeMillis()
                         )
 
@@ -129,4 +151,45 @@ class CreateCampaignActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun cargarPalyer() {
+        val userId = "Mike"
+        val spinnerPlayer = findViewById<Spinner>(R.id.spinnerplayer)
+
+        db.getCharacterList(
+            userId,
+            onResult = { lista ->
+                val nombresPersonajes = lista // Asegúrate que el campo sea 'name'
+
+                val adapter = ArrayAdapter(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    nombresPersonajes
+                )
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinnerPlayer.adapter = adapter
+
+                spinnerPlayer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        val seleccionado = nombresPersonajes[position]
+                        Log.d("SpinnerPlayer", "Seleccionado: $seleccionado")
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // Nada seleccionado
+                    }
+                }
+            },
+            onError = {
+                Log.e("CreateCampaignActivity", "Error al cargar personajes: ${it.message}")
+            }
+        )
+    }
+
+
 }

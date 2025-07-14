@@ -52,6 +52,18 @@
             android:layout_height="wrap_content"
             android:minHeight="48dp" />
 
+
+        <!-- Player -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Player" />
+        <Spinner
+            android:id="@+id/spinnerplayer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
         <!-- Razas o facciones -->
         <EditText
             android:id="@+id/editDominantRaces"
@@ -78,24 +90,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/lugares_clave"
-            android:inputType="text"
-            android:minHeight="48dp" />
-
-        <!-- Personajes importantes -->
-        <EditText
-            android:id="@+id/editKeyCharacters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/personajes_importantes"
-            android:inputType="text"
-            android:minHeight="48dp" />
-
-        <!-- Ganchos narrativos -->
-        <EditText
-            android:id="@+id/editHooks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/ganchos_narrativos"
             android:inputType="text"
             android:minHeight="48dp" />
 
