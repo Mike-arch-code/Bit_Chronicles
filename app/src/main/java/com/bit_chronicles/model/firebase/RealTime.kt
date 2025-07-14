@@ -133,31 +133,25 @@ class RealTime {
     fun getCharacterInfo(
         userId: String,
         characterName: String,
-        onResult: (Map<String, String>) -> Unit,
+        onResult: (Map<String, Any?>) -> Unit,
         onError: (Exception) -> Unit = {}
     ) {
-        val path = "personajes/$userId/$characterName/historia"
+        val path = "personajes/$userId/$characterName"
 
         rootRef.child(path).get()
             .addOnSuccessListener { snapshot ->
+                val result = mutableMapOf<String, Any?>()
 
-                val historia = snapshot.getValue(String::class.java) ?: ""
-                val result = mapOf(
-                    "characterName" to characterName,
-                    "historia" to historia
-                )
+                snapshot.children.forEach { child ->
+                    result[child.key ?: ""] = child.value
+                }
+
                 onResult(result)
             }
             .addOnFailureListener { exception ->
-                Log.e("RealTime", "Error al obtener historia: ${exception.message}")
+                Log.e("RealTime", "Error al obtener info: ${exception.message}")
                 onError(exception)
             }
     }
-
-
-
-
-
-
 
 }

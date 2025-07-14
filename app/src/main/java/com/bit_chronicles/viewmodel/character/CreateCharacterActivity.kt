@@ -7,12 +7,11 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
+import com.bit_chronicles.model.CharacterParser
 import com.bit_chronicles.model.character.CharacterPrompt
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.viewmodel.UiState
 import com.bit_chronicles.model.firebase.CharacterRepository
-import com.bit_chronicles.viewmodel.campaign.CampaignInfoActivity
-import com.bit_chronicles.viewmodel.campaign.CreateCampaignActivity
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -96,7 +95,7 @@ class CreateCharacterActivity : AppCompatActivity() {
             apiService.sendPrompt(prompt)
         }
 
-        // Observar respuesta de la IA
+
         lifecycleScope.launch {
             apiService.uiState.collectLatest { state ->
                 when (state) {
@@ -122,14 +121,12 @@ class CreateCharacterActivity : AppCompatActivity() {
                             "motivación" to editMotivation.text.toString().trim()
                         )
 
-                        val userId = "Mike"
-
-
+                        val structuredData = CharacterParser.parseCharacterData(story)
 
                         CharacterRepository.saveCharacter(
-                            userId = userId,
+                            userId = "Mike",
                             characterName = characterName,
-                            metadata = metadata,
+                            parsedData = structuredData,
                             story = story,
                             onSuccess = {
                                 Toast.makeText(
@@ -146,6 +143,8 @@ class CreateCharacterActivity : AppCompatActivity() {
                                 ).show()
                             }
                         )
+
+
 
                         val intent = Intent(this@CreateCharacterActivity, CharacterinfoActivity::class.java)
                         intent.putExtra("characterName", characterName)

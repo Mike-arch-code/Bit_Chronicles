@@ -11,7 +11,7 @@ object CharacterRepository {
     fun saveCharacter(
         userId: String,
         characterName: String,
-        metadata: Map<String, Any>,
+        parsedData: Map<String, Any>,
         story: String,
         onSuccess: () -> Unit = {},
         onError: (Exception) -> Unit = {}
@@ -19,7 +19,38 @@ object CharacterRepository {
         val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
         val basePath = "personajes/$userId/$characterName"
 
-        db.write("$basePath/metadata", metadata, onSuccess, onError)
-        db.write("$basePath/historia", story)
+        // Agrega la historia al parsedData
+        val completeData = parsedData.toMutableMap().apply {
+            put("historia", story)
+            put("fecha_creacion", date)
+        }
+
+        val sanitizedData = sanitizeKeys(completeData)
+
+        db.write(basePath, sanitizedData, onSuccess, onError)
+    }
+
+    private fun sanitizeKeys(map: Map<String, Any?>): Map<String, Any?> {
+        val illegalChars = Regex("[./#\$\\[\\]\n\r\t]")
+        val whitespace = Regex("\\s+")
+
+        return map.mapNotNull { (key, value) ->
+            val sanitizedKey = key
+                .replace(illegalChars, "")
+                .replace(whitespace, "_")
+                .takeIf { it.isNotBlank() } ?: return@mapNotNull null
+
+            val sanitizedValue = when (value) {
+                is Map<*, *> -> sanitizeKeys(value as Map<String, Any?>)
+                is List<*> -> value.map {
+                    if (it is Map<*, *>) {
+                        sanitizeKeys(it as Map<String, Any?>)
+                    } else it
+                }
+                else -> value
+            }
+
+            sanitizedKey to sanitizedValue
+        }.toMap()
     }
 }
