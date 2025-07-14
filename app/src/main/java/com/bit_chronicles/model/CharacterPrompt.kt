@@ -44,7 +44,7 @@ class CharacterPrompt(
             Ataques:  
             - [arma]: +[x] al ataque, [daño] daño [tipo]  
             Habilidades Especiales:  
-            - [nombre]: [descripción]  
+            - [nombre]: [descripción breve]  
             Equipo: [lista de objetos importantes]  
             Mochila: [contenido de la mochila de aventurero o ladrón]  
             Oro: [número] PO

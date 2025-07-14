@@ -40,7 +40,6 @@ object CharacterParser {
         data["nivel"] = extract("Nivel:\\s*(\\d+)")
         data["hp"] = extract("HP:\\s*(\\d+)")
         data["ca"] = extract("CA:\\s*(\\d+)")
-        data["velocidad"] = extract("Velocidad:\\s*(\\d+\\s*pies)")
 
         // Contexto
         data["alineamiento"] = extract("Alineamiento:\\s*(.*?)\\s+Personalidad:")
@@ -53,7 +52,6 @@ object CharacterParser {
         data["habilidades"] = extractMap("Habilidades")
 
         // Listas
-        data["ataques"] = extractList("Ataques")
         data["habilidadesEspeciales"] = extractList("Habilidades Especiales")
 
         // Inventario

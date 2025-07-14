@@ -53,11 +53,6 @@
         <TextView android:id="@+id/tvSkills" android:layout_width="match_parent" android:layout_height="wrap_content" />
         <TextView android:id="@+id/tvSpecialSkills" android:layout_width="match_parent" android:layout_height="wrap_content" />
 
-        <!-- Ataques -->
-        <TextView android:text="⚔️ Ataques" android:textStyle="bold"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <TextView android:id="@+id/tvAttacks" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
         <!-- Equipo -->
         <TextView android:text="🎒 Equipo" android:textStyle="bold"
             android:layout_width="match_parent" android:layout_height="wrap_content" />
@@ -68,11 +63,6 @@
         <TextView android:text="📦 Mochila" android:textStyle="bold"
             android:layout_width="match_parent" android:layout_height="wrap_content" />
         <TextView android:id="@+id/tvBackpack" android:layout_width="match_parent" android:layout_height="wrap_content" />
-
-        <!-- Rasgos -->
-        <TextView android:text="🌟 Rasgos" android:textStyle="bold"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
-        <TextView android:id="@+id/tvTraits" android:layout_width="match_parent" android:layout_height="wrap_content" />
 
         <!-- Personalidad y Motivación -->
         <TextView android:text="🧠 Personalidad y Motivación" android:textStyle="bold"

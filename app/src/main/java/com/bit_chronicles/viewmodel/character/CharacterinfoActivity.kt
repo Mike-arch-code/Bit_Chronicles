@@ -60,13 +60,10 @@ class CharacterinfoActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.tvSkills).text = "Habilidades: $habilidades"
                 findViewById<TextView>(R.id.tvSpecialSkills).text = "Habilidades Especiales: $habilidadesEspeciales"
 
-                findViewById<TextView>(R.id.tvAttacks).text = ataques.toString()
-
                 findViewById<TextView>(R.id.tvEquipment).text = equipo.toString()
                 findViewById<TextView>(R.id.tvGold).text = "Oro: $oro"
                 findViewById<TextView>(R.id.tvBackpack).text = mochila.toString()
 
-                findViewById<TextView>(R.id.tvTraits).text = rasgos.toString()
                 findViewById<TextView>(R.id.tvPersonality).text = personalidad.toString()
                 findViewById<TextView>(R.id.tvMotivation).text = motivacion.toString()
             },
