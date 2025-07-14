@@ -102,6 +102,17 @@
             android:inputType="text"
             android:minHeight="48dp" />
 
+        <!-- Turnos -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Turnos" />
+        <Spinner
+            android:id="@+id/spinnerturnos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="48dp" />
+
         <!-- Lore del mundo -->
         <EditText
             android:id="@+id/editWorldLore"

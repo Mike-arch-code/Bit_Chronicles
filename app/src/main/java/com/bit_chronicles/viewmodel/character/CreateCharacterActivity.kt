@@ -7,8 +7,8 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
-import com.bit_chronicles.model.CharacterParser
-import com.bit_chronicles.model.character.CharacterPrompt
+import com.bit_chronicles.model.data.CharacterParser
+import com.bit_chronicles.model.proms.CharacterPrompt
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.viewmodel.UiState
 import com.bit_chronicles.model.firebase.CharacterRepository

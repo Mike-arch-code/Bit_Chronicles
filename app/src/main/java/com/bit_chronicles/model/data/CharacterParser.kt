@@ -1,4 +1,4 @@
-package com.bit_chronicles.model
+package com.bit_chronicles.model.data
 
 object CharacterParser {
 

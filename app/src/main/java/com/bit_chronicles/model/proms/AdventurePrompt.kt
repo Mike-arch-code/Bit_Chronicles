@@ -1,4 +1,4 @@
-package com.bit_chronicles.model
+package com.bit_chronicles.model.proms
 
 class AdventurePrompt(
     private val worldName: String,
@@ -9,9 +9,9 @@ class AdventurePrompt(
     private val worldLore: String,
     private val tone: String,
     private val keyLocations: String,
-    private val keyCharacters: String,
-    private val hooks: String,
-    private val objective: String
+    private val objective: String,
+    private val turnos: String,
+    private val playerHistory: String
 ) {
     fun buildPromptString(): String {
         return """
@@ -28,9 +28,11 @@ class AdventurePrompt(
         - Conflicto principal: $mainConflict
         - Historia previa del mundo: $worldLore
         - Lugares clave: $keyLocations
-        - Personajes importantes: $keyCharacters
-        - Ganchos narrativos: $hooks
         - Objetivo de los jugadores: $objective
+        - Duración estimada de la campaña: $turnos
+
+        Información adicional del personaje principal del jugador:
+        $playerHistory
 
         Requisitos:
         - Comienza con una escena fuerte (una batalla, un descubrimiento, una traición, etc.).
@@ -41,5 +43,4 @@ class AdventurePrompt(
         Escribe como si fuera la introducción oral de un narrador que atrapa a sus jugadores desde la primera frase.
     """.trimIndent()
     }
-
 }

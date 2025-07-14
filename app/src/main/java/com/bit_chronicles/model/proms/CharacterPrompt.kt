@@ -1,4 +1,4 @@
-package com.bit_chronicles.model.character
+package com.bit_chronicles.model.proms
 
 class CharacterPrompt(
     private val name: String,

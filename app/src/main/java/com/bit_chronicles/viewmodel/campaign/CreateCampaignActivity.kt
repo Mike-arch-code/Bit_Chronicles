@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
-import com.bit_chronicles.model.AdventurePrompt
+import com.bit_chronicles.model.proms.AdventurePrompt
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.model.firebase.AdventureRepository
 import com.bit_chronicles.model.firebase.RealTime
@@ -39,6 +39,7 @@ class CreateCampaignActivity : AppCompatActivity() {
         val spinnerPower = findViewById<Spinner>(R.id.spinnerPower)
         val spinnerConflict = findViewById<Spinner>(R.id.spinnerConflict)
         val spinnerTone = findViewById<Spinner>(R.id.spinnerTone)
+        val spinerturnos = findViewById<Spinner>(R.id.spinnerturnos)
 
         val spinnerPlayer = findViewById<Spinner>(R.id.spinnerplayer)
 
@@ -58,6 +59,10 @@ class CreateCampaignActivity : AppCompatActivity() {
         ArrayAdapter.createFromResource(this, R.array.tone_types, android.R.layout.simple_spinner_item).also {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerTone.adapter = it
+        }
+        ArrayAdapter.createFromResource(this, R.array.turnos, android.R.layout.simple_spinner_item).also {
+            it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinerturnos.adapter = it
         }
 
         // Cargar personajes en el Spinner
@@ -83,6 +88,7 @@ class CreateCampaignActivity : AppCompatActivity() {
                     val tone = spinnerTone.selectedItem.toString()
                     val keyLocations = editKeyLocations.text.toString().trim()
                     val objective = editObjective.text.toString().trim()
+                    val turnos = spinerturnos.selectedItem.toString()
 
                     val prompt = AdventurePrompt(
                         worldName,
@@ -94,6 +100,7 @@ class CreateCampaignActivity : AppCompatActivity() {
                         tone,
                         keyLocations,
                         objective,
+                        turnos,
                         playerHistory
                     ).buildPromptString()
 
