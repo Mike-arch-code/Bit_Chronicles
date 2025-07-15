@@ -12,7 +12,7 @@ class CharacterPrompt(
 ) {
     fun buildPromptString(): String {
         return """
-            Eres un generador experto de personajes para Dungeons & Dragons 5e.
+            Eres un generador  de personajes para Dungeons & Dragons 5e.
 
             Crea la ficha de personaje a nivel 1 con base en los siguientes datos:
 

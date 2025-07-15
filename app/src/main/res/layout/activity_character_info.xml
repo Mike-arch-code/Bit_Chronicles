@@ -3,7 +3,7 @@
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="0dp"
     android:background="#FFFFFF">
 
     <LinearLayout
@@ -13,6 +13,11 @@
         android:orientation="vertical"
         android:divider="?android:attr/dividerHorizontal"
         android:showDividers="middle">
+
+        <include
+            layout="@layout/navbar"
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
 
         <!-- Imagen futura -->
         <FrameLayout
