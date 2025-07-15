@@ -20,7 +20,8 @@ class VoiceCommandPrompt(private val input: String) {
         turnos: String,
         players: String,
         jugadorActual: String,
-        playerList: List<String>
+        playerList: List<String>,
+        dado:String
     ): String {
         val nombre = ficha["nombre"] ?: jugadorActual
 
@@ -52,7 +53,6 @@ class VoiceCommandPrompt(private val input: String) {
             "Estás solo en esta aventura, al menos por ahora."
         }
 
-        val tirada = 10
 
         return """
         Eres el narrador de un juego de rol de fantasía con varios jugadores. La historia principal es:
@@ -83,7 +83,7 @@ class VoiceCommandPrompt(private val input: String) {
 
         Nunca uses símbolos como asteriscos, guiones o paréntesis. Eres un narrador oral, dentro del mundo, hablando como Dungeon Master.
         
-        Cuando el jugador haga una acción peligrosa o de combate, lanza una tirada externa `$tirada` del 1 al 20. Menciona cuánto salió. Aplica bonificadores según sus estadísticas relevantes (fuerza, destreza, clase, equipo, etc.) y compáralo con la dificultad o la CA del enemigo. Si tiene éxito, indica el daño infligido y cuántos HP le quedan al enemigo. Si falla, describe las consecuencias, el daño recibido (si aplica) y cuántos HP le quedan al jugador. Si su HP llega a 0, puede morir; narra esa muerte de forma impactante pero coherente.
+        Cuando el jugador haga una acción peligrosa o de combate, lanza una tirada externa `$dado` del 1 al 20. Menciona cuánto salió. Aplica bonificadores según sus estadísticas relevantes (fuerza, destreza, clase, equipo, etc.) y compáralo con la dificultad o la CA del enemigo. Si tiene éxito, indica el daño infligido y cuántos HP le quedan al enemigo. Si falla, describe las consecuencias, el daño recibido (si aplica) y cuántos HP le quedan al jugador. Si su HP llega a 0, puede morir; narra esa muerte de forma impactante pero coherente.
         
         Asigna estadísticas internas a los enemigos según su tipo:
         - **Básicos**: HP bajo (5–10), sin habilidades, vencibles en 1–2 turnos.
@@ -97,7 +97,7 @@ class VoiceCommandPrompt(private val input: String) {
         
         Tu respuesta debe dividirse claramente en dos mitades si hay más de un jugador:
         
-        1. **Parte del jugador actual ($nombre)**: Di su nombre. Narra su acción, el resultado de la tirada `$tirada`, las consecuencias, y termina en una situación que lo obligue a decidir.
+        1. **Parte del jugador actual ($nombre)**: Di su nombre. Narra su acción, el resultado de la tirada `$dado`, las consecuencias, y termina en una situación que lo obligue a decidir.
         
         2. **Parte para el siguiente jugador : Marca el cambio diciendo su nombre, luego describe lo que ve, siente o cómo lo afecta lo ocurrido. No le des una lista. Invítalo a decidir con frases como “¿Qué haces tú?” o “¿Cómo reaccionas ante esto?”
         
@@ -109,6 +109,7 @@ class VoiceCommandPrompt(private val input: String) {
     fun process(
         userId: String,
         worldName: String,
+        dado : String,
         onResult: (String) -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
@@ -157,7 +158,8 @@ class VoiceCommandPrompt(private val input: String) {
                                             turnos = turnos,
                                             players = players,
                                             jugadorActual = currentPlayerName,
-                                            playerList = playerList
+                                            playerList = playerList,
+                                            dado = dado
                                         )
 
                                         val apiService = ApiService()

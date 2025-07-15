@@ -15,8 +15,8 @@ class DiceRollFragment : Fragment() {
     private lateinit var diceImage: ImageView
     private var finalResult: Int = -1
 
-    var onDiceRolled: ((Int) -> Unit)? = null // callback accesible desde fuera
-    val resultado get() = finalResult // propiedad pública para acceder desde el host
+    var onDiceRolled: ((Int) -> Unit)? = null
+    val resultado get() = finalResult
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

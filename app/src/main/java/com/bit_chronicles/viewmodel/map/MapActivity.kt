@@ -29,6 +29,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var worldName: String
     private val vozPorDefecto = "es-es-x-eed-network"
     private val db = RealTime()
+    private var textoReconocido: String? = null
 
     private val jugadorCirculos = mutableMapOf<String, View>()
     private val listaJugadores = mutableListOf<String>()
@@ -50,27 +51,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             startListeningFallback()
         }
 
-        // BOTÓN DE DADO → MOSTRAR FRAGMENTO
-        findViewById<Button>(R.id.btnDice).setOnClickListener {
-            val diceFragment = DiceRollFragment()
 
-            // Registrar callback para recibir el resultado
-            diceFragment.onDiceRolled = { resultado ->
-                // Aquí puedes usar el resultado como quieras
-                Log.d("ResultadoDado", "Resultado: $resultado")
-
-                // Ejemplo: actualizar UI o lógica de turno
-                // actualizarTurnoConDado(resultado)
-            }
-
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.game_fragment_container, diceFragment)
-                .addToBackStack(null)
-                .commit()
-        }
-
-
-        // OBTENER JUGADORES DESDE FIREBASE
         db.getCampaignInfo(
             userId = "Mike",
             campaignName = worldName,
@@ -124,20 +105,40 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             Log.d("SpeechRecognizer", "Texto reconocido: $text")
 
-            VoiceCommandPrompt(text).process(
-                userId = "Mike",
-                worldName = worldName,
-                onResult = { response ->
-                    avanzarTurno()
-                    Log.d("IA", "Respuesta: $response")
-                    speakText(response)
-                },
-                onError = { error ->
-                    Log.e("IA", "Error en procesamiento: ${error.message}")
-                }
-            )
+            // 👇 Guardamos el texto, pero aún no lo usamos
+            textoReconocido = text
+
+            // Mostramos el dado
+            val diceFragment = DiceRollFragment()
+            diceFragment.onDiceRolled = { resultado ->
+                val promptFinal = "$text con un dado de resultado"
+
+                val dado = resultado
+                VoiceCommandPrompt(promptFinal).process(
+                    userId = "Mike",
+                    worldName = worldName,
+                    dado = dado.toString(),
+                    onResult = { response ->
+                        avanzarTurno()
+                        Log.d("IA", "Respuesta: $response")
+                        speakText(response)
+                    },
+                    onError = { error ->
+                        Log.e("IA", "Error en procesamiento: ${error.message}")
+                    }
+                )
+
+                // Opcional: cerrar el fragmento después de lanzar el dado
+                supportFragmentManager.popBackStack()
+            }
+
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.game_fragment_container, diceFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
+
 
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
