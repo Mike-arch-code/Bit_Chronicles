@@ -5,30 +5,29 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.speech.RecognizerIntent
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
 import com.bit_chronicles.model.VoiceCommandPrompt
-import com.bit_chronicles.model.api.ApiService
-import com.bit_chronicles.viewmodel.UiState
-import kotlinx.coroutines.launch
 import java.util.Locale
 
-class MapActivity : AppCompatActivity() {
+class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
-    private lateinit var isoMapView: IsoMapView
-    private val apiService = ApiService()
+    private var tts: TextToSpeech? = null
+    private var isTtsReady = false
+
+    // Esta es la voz predeterminada que quieres usar
+    private val vozPorDefecto = "es-es-x-eec-local"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
-        isoMapView = findViewById(R.id.mapView)
         checkAudioPermission()
-        observeVoiceResult()
+        tts = TextToSpeech(this, this)
 
         findViewById<Button>(R.id.btnVoice).setOnClickListener {
             startListeningFallback()
@@ -70,59 +69,51 @@ class MapActivity : AppCompatActivity() {
 
             Log.d("SpeechRecognizer", "Texto reconocido: $text")
 
-            // Si reconoce caminar o mover, ejecuta acción directa sin IA
-            if ("caminar" in text || "mover" in text) {
-                Log.d("SpeechRecognizer", "Comando directo detectado: $text")
-                tryMovePlayer()
-            } else {
-                // Si no, envía el texto a la IA
-                val prompt = VoiceCommandPrompt(text).build()
-                Log.d("Prompt", "Enviando prompt a IA: $prompt")
-                apiService.sendPrompt(prompt)
-            }
-        }
-    }
-
-    private fun observeVoiceResult() {
-        lifecycleScope.launch {
-            apiService.uiState.collect { state ->
-                when (state) {
-                    is UiState.Success -> {
-                        val response = state.response.lowercase(Locale.ROOT)
-                        Log.d("IA", "Respuesta IA: $response")
-                        if ("caminar" in response || "mover" in response) {
-                            tryMovePlayer()
-                        }
-                    }
-
-                    is UiState.Error -> {
-                        Log.e("IA", "Error: ${state.message}")
-                    }
-
-                    else -> {}
+            VoiceCommandPrompt(text).process(
+                userId = "user123",
+                worldName = "Mundo1",
+                onResult = { response ->
+                    Log.d("IA", "Respuesta: $response")
+                    speakText(response)
+                },
+                onError = { error ->
+                    Log.e("IA", "Error en procesamiento: ${error.message}")
                 }
-            }
+            )
         }
     }
 
-    private fun tryMovePlayer() {
-        val selectedRow = isoMapView.getSelectedRow()
-        val selectedCol = isoMapView.getSelectedCol()
+    override fun onInit(status: Int) {
+        if (status == TextToSpeech.SUCCESS) {
+            isTtsReady = true
+            tts?.setLanguage(Locale("es", "ES"))
 
-        Log.d("MapMove", "SelectedRow: $selectedRow, SelectedCol: $selectedCol")
+            // Establecer la voz por defecto si existe
+            val voz = tts?.voices?.firstOrNull { it.name == vozPorDefecto }
+            if (voz != null) {
+                tts?.voice = voz
+                Log.d("TTS", "Voz predeterminada establecida: ${voz.name}")
+            } else {
+                Log.w("TTS", "Voz '${vozPorDefecto}' no encontrada.")
+            }
 
-        if (selectedRow != -1 && selectedCol != -1) {
-            val deltaRow = selectedRow - 3
-            val deltaCol = selectedCol - 3
-            val targetRow = isoMapView.playerMapRow + deltaRow
-            val targetCol = isoMapView.playerMapCol + deltaCol
-
-            Log.d("MapMove", "Moviendo a fila=$targetRow, columna=$targetCol")
-
-            isoMapView.animatePlayerSmoothlyTo(targetRow, targetCol, speedPerTileMs = 600L)
         } else {
-            Log.w("MapMove", "No hay celda seleccionada para moverse")
+            Log.e("TTS", "Fallo al inicializar TTS")
         }
+    }
+
+    private fun speakText(text: String) {
+        if (!isTtsReady) {
+            Log.w("TTS", "TTS no está listo aún.")
+            return
+        }
+        tts?.speak(text, TextToSpeech.QUEUE_FLUSH, null, null)
+    }
+
+    override fun onDestroy() {
+        tts?.stop()
+        tts?.shutdown()
+        super.onDestroy()
     }
 
     override fun onRequestPermissionsResult(
