@@ -16,7 +16,7 @@
         android:background="@color/gris"
         android:contentDescription="Evento actual" />
 
-    <!-- Lista horizontal de jugadores con indicador circular -->
+    <!-- Lista horizontal de jugadores -->
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,6 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <!-- Jugadores: Ejemplo de ítem, estos se llenarán dinámicamente -->
             <LinearLayout
                 android:id="@+id/player_list"
                 android:layout_width="wrap_content"
@@ -39,9 +38,8 @@
                 android:divider="?android:attr/dividerHorizontal"
                 android:showDividers="middle"
                 android:dividerPadding="4dp">
-                <!-- Aquí se insertarán los jugadores desde Kotlin -->
+                <!-- Jugadores se agregan desde Kotlin -->
             </LinearLayout>
-
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -85,7 +83,7 @@
             android:textColor="@color/white" />
     </LinearLayout>
 
-    <!-- Zona inferior para animaciones o vistas dinámicas -->
+    <!-- Contenedor para fragmentos (Dado u otros) -->
     <FrameLayout
         android:id="@+id/game_fragment_container"
         android:layout_width="match_parent"
