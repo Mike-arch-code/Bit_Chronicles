@@ -35,6 +35,8 @@ class CreateCharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creat_person)
 
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
         // Bind UI
         editName = findViewById(R.id.editCharacterName)
         spinnerRace = findViewById(R.id.spinnerRace)
@@ -72,6 +74,10 @@ class CreateCharacterActivity : AppCompatActivity() {
         ).also {
             it.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerBackground.adapter = it
+        }
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
 
         // Botón para generar el personaje con la IA

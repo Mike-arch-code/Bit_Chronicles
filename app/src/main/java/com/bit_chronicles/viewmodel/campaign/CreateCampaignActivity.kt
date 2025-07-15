@@ -18,6 +18,7 @@ import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+
 class CreateCampaignActivity : AppCompatActivity() {
 
     private val apiService: ApiService by viewModels()
@@ -27,6 +28,13 @@ class CreateCampaignActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creat_camp)
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
 
         val sendButton = findViewById<Button>(R.id.sendButton)
         val responseTextView = findViewById<TextView>(R.id.responseTextView)

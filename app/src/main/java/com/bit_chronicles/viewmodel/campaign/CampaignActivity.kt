@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
+import android.widget.ImageButton
 
 class CampaignActivity : AppCompatActivity() {
 
@@ -27,6 +28,13 @@ class CampaignActivity : AppCompatActivity() {
             val intent = Intent(this, CampaignListActivity::class.java)
             startActivity(intent)
         }
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
 
 
     }

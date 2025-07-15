@@ -24,6 +24,9 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private val vozPorDefecto = "es-es-x-eed-network"
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 

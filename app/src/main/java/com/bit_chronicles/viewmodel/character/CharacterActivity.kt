@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
+import android.widget.ImageButton
 
 class CharacterActivity: AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,5 +26,12 @@ class CharacterActivity: AppCompatActivity() {
             val intent = Intent(this, CharacterListActivity::class.java)
             startActivity(intent)
         }
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 }
