@@ -46,8 +46,9 @@ class VoiceCommandPrompt(private val input: String) {
             $historial
 
             El jugador, actuando como $nombre, dice: $input
+            
+            Responde al jugador en segunda persona. Si es el primer mensaje del jugador (el saludo), introduce el mundo de juego con una breve descripción del entorno, el conflicto principal y el tono general de la historia, para que el jugador se ubique y pueda comenzar a tomar decisiones. A partir de ahí, reacciona a lo que el jugador dice que hace su personaje, manteniendo las respuestas breves (1 a 3 oraciones), centradas en las consecuencias inmediatas de sus acciones. Siempre finaliza tu respuesta con una situación o dilema que obligue al jugador a actuar, presentando al menos dos opciones claras para elegir, pero acepta y adapta la historia si el jugador propone una acción diferente. Si el jugador pregunta por su equipo, mochila, estadísticas o habilidades, debes responder con precisión en ese mismo turno, sin importar lo que esté ocurriendo en la escena. No salgas del mundo de juego. Eres el Dungeon Master y debes llevar la historia a su clímax y desenlace en aproximadamente 10 turnos de intercambio.
 
-            Responde al jugador refiriendote a el por  su nombre de personaje . Mantén la respuesta breve (1 a 3 oraciones), enfocada en la acción o consecuencia inmediata.Tambien pregunta por la accion a realizar a continuacion y no olvides el registro general. No salgas del mundo de juego.
     """.trimIndent()
     }
 

@@ -35,12 +35,12 @@ class AdventurePrompt(
         $playerHistory
 
         Requisitos:
-        - Comienza con una escena fuerte (una batalla, un descubrimiento, una traición, etc.).
+        - comienza dando un contexto del mundo para terminar en una esena fuerte apenas para que un jugador empeice la historia poco antes del conflicto(una batalla, un descubrimiento, una traición, etc.)..
         - Integra los elementos del mundo sin sonar a lista o ficha técnica.
         - Mantén un tono **$tone**.
         - No uses frases cliché como “el viento sopla”, “tierras olvidadas”, “ecos del pasado”.
 
-        Escribe como si fuera la introducción oral de un narrador que atrapa a sus jugadores desde la primera frase.
+        Escribe como si fuera la introducción oral de un narrador Dungeon master que atrapa a sus jugadores desde la primera frase.
     """.trimIndent()
     }
 }
