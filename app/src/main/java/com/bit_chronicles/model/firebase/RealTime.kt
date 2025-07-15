@@ -60,24 +60,35 @@ class RealTime {
     fun getCampaignInfo(
         userId: String,
         campaignName: String,
-        onResult: (Map<String, String>) -> Unit,
+        onResult: (Map<String, Any?>) -> Unit,
         onError: (Exception) -> Unit = {}
     ) {
-        val path = "aventuras/$userId/$campaignName/historia"
+        val historiaPath = "aventuras/$userId/$campaignName/historia"
+        val metadataPath = "aventuras/$userId/$campaignName/metadata"
 
-        rootRef.child(path).get()
-            .addOnSuccessListener { snapshot ->
-                val historia = snapshot.value as? String ?: ""
+        rootRef.child(historiaPath).get().addOnSuccessListener { historiaSnapshot ->
+            val historia = historiaSnapshot.value as? String ?: ""
+
+            rootRef.child(metadataPath).get().addOnSuccessListener { metadataSnapshot ->
+                val turnos = metadataSnapshot.child("turnos").getValue(Int::class.java) ?: 10
+
                 val result = mapOf(
                     "campaignName" to campaignName,
-                    "historia" to historia
+                    "historia" to historia,
+                    "turnos" to turnos
                 )
                 onResult(result)
-            }
-            .addOnFailureListener { exception ->
-                Log.e("RealTime", "Error al obtener historia: ${exception.message}")
+
+            }.addOnFailureListener { exception ->
+                Log.e("RealTime", "Error al obtener metadata: ${exception.message}")
                 onError(exception)
             }
+
+        }.addOnFailureListener { exception ->
+            Log.e("RealTime", "Error al obtener historia: ${exception.message}")
+            onError(exception)
+        }
+
     }
 
     fun getCharacterList(

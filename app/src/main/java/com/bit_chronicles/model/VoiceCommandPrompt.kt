@@ -16,7 +16,8 @@ class VoiceCommandPrompt(private val input: String) {
     private fun buildPrompt(
         historia: String,
         ficha: Map<String, Any?>,
-        chatHistory: List<Pair<String, String>>
+        chatHistory: List<Pair<String, String>>,
+        turnos: String
     ): String {
         val nombre = ficha["nombre"] ?: "Tu personaje"
 
@@ -64,7 +65,7 @@ class VoiceCommandPrompt(private val input: String) {
             
             Siempre termina tu turno con una consecuencia abierta o situación que obligue al jugador a tomar una decisión, sin dar opciones explícitas. Usa frases como “¿Qué haces ahora?” o “¿Cómo reaccionas?”.
             
-            Si el jugador pregunta por su inventario, mochila, habilidades, estadísticas, equipo o contexto del mundo, respóndele claramente en ese mismo turno, sin importar lo que esté ocurriendo en la escena. No salgas del mundo de juego. Eres el Dungeon Master y debes guiar la historia hacia un clímax y desenlace en aproximadamente 10 turnos de intercambio.
+            Si el jugador pregunta por su inventario, mochila, habilidades, estadísticas, equipo o contexto del mundo, respóndele claramente en ese mismo turno, sin importar lo que esté ocurriendo en la escena. No salgas del mundo de juego. Eres el Dungeon Master y debes guiar la historia hacia un clímax y desenlace en aproximadamente $turnos turnos de intercambio.
         """.trimIndent()
     }
 
@@ -87,6 +88,8 @@ class VoiceCommandPrompt(private val input: String) {
                             .replace("\"", "")
                             .trim()
 
+                        val turnos = (campaignData["turnos"] ?: userId).toString()
+
                         val characterName = (campaignData["nombre"] ?: userId).toString()
 
                         db.getCharacterInfo(
@@ -103,7 +106,7 @@ class VoiceCommandPrompt(private val input: String) {
                                             .sortedBy { it.timestamp }
                                             .map { it.sender to it.message }
 
-                                        val prompt = buildPrompt(historia, characterData, orderedChat)
+                                        val prompt = buildPrompt(historia, characterData, orderedChat,turnos)
 
                                         val apiService = ApiService()
                                         CoroutineScope(Dispatchers.IO).launch {

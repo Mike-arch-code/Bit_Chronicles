@@ -48,24 +48,6 @@ object AdventureRepository {
         )
         db.write(path, msg, onSuccess, onError)
     }
-
-    // Puedes llamar esto desde otra pestaña para dejar mensaje inicial
-    fun addInitialMessage(
-        userId: String,
-        worldName: String,
-        message: String = "Bienvenido al mundo de $worldName.",
-        onSuccess: () -> Unit = {},
-        onError: (Exception) -> Unit = {}
-    ) {
-        val msg = mapOf(
-            "sender" to "dm",
-            "message" to message,
-            "timestamp" to System.currentTimeMillis()
-        )
-        val path = "aventuras/$userId/$worldName/chat/0"
-        db.write(path, msg, onSuccess, onError)
-    }
-
     fun getChatHistory(
         userId: String,
         worldName: String,

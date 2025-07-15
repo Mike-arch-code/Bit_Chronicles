@@ -134,7 +134,8 @@ class CreateCampaignActivity : AppCompatActivity() {
                             "mainConflict" to spinnerConflict.selectedItem.toString(),
                             "worldLore" to editWorldLore.text.toString().trim(),
                             "tone" to spinnerTone.selectedItem.toString(),
-                            "createdAt" to System.currentTimeMillis()
+                            "createdAt" to System.currentTimeMillis(),
+                            "turnos" to  spinerturnos.selectedItem.toString(),
                         )
 
                         val userId = "Mike"
