@@ -21,7 +21,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var worldName: String
 
     // Esta es la voz predeterminada que quieres usar
-    private val vozPorDefecto = "es-es-x-eec-local"
+    private val vozPorDefecto = "es-es-x-eed-network"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,7 +89,10 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             isTtsReady = true
-            tts?.setLanguage(Locale("es", "ES"))
+
+            tts?.language = Locale("es", "ES")
+            tts?.setPitch(0.6f) // tono más grave (1.0 es neutro)
+            tts?.setSpeechRate(0.9f)
 
             // Establecer la voz por defecto si existe
             val voz = tts?.voices?.firstOrNull { it.name == vozPorDefecto }
