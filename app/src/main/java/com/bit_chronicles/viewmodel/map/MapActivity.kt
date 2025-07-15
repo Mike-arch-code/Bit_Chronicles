@@ -18,6 +18,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null
     private var isTtsReady = false
+    private lateinit var worldName: String
 
     // Esta es la voz predeterminada que quieres usar
     private val vozPorDefecto = "es-es-x-eec-local"
@@ -25,6 +26,8 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
+
+        worldName = intent.getStringExtra("worldName") ?: ""
 
         checkAudioPermission()
         tts = TextToSpeech(this, this)
@@ -70,8 +73,8 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             Log.d("SpeechRecognizer", "Texto reconocido: $text")
 
             VoiceCommandPrompt(text).process(
-                userId = "user123",
-                worldName = "Mundo1",
+                userId = "Mike",
+                worldName =worldName,
                 onResult = { response ->
                     Log.d("IA", "Respuesta: $response")
                     speakText(response)

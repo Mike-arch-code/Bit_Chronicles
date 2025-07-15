@@ -35,30 +35,6 @@ class RealTime {
             }
     }
 
-    fun listen(path: String, onChange: (Any?) -> Unit) {
-        rootRef.child(path).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                onChange(snapshot.value)
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("RealTime", "Listener cancelled at $path: ${error.message}")
-            }
-        })
-    }
-
-    fun delete(path: String, onSuccess: () -> Unit = {}, onError: (Exception) -> Unit = {}) {
-        rootRef.child(path).removeValue()
-            .addOnSuccessListener {
-                Log.d("RealTime", "Data deleted at $path")
-                onSuccess()
-            }
-            .addOnFailureListener { exception ->
-                Log.e("RealTime", "Error deleting $path: ${exception.message}")
-                onError(exception)
-            }
-    }
-
 
     fun getCampaignList(userId: String, onResult: (List<String>) -> Unit, onError: (Exception) -> Unit = {}) {
         val path = "aventuras/$userId"
@@ -152,6 +128,15 @@ class RealTime {
                 Log.e("RealTime", "Error al obtener info: ${exception.message}")
                 onError(exception)
             }
+    }
+    fun read(
+        path: String,
+        onSuccess: (DataSnapshot) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        rootRef.child(path).get()
+            .addOnSuccessListener(onSuccess)
+            .addOnFailureListener(onError)
     }
 
 }

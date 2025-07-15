@@ -18,8 +18,9 @@ class CampaignInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_campaign_info)
 
-        val userId = "Mike" // Reemplazar por autenticación real si aplica
+        val userId = "Mike"
         val campaignName = intent.getStringExtra("campaignName") ?: return
+
 
         val tvInfo = findViewById<TextView>(R.id.tvCampaignInfo)
 
@@ -44,6 +45,7 @@ class CampaignInfoActivity : AppCompatActivity() {
         val playButton = findViewById<Button>(R.id.btnPlayCampaign)
         playButton.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
+            intent.putExtra("worldName", campaignName)
             startActivity(intent)
         }
     }

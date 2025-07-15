@@ -3,6 +3,7 @@ package com.bit_chronicles.model
 import android.util.Log
 import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.model.firebase.AdventureRepository
+import com.bit_chronicles.model.firebase.RealTime
 import com.bit_chronicles.viewmodel.UiState
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -11,12 +12,43 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class VoiceCommandPrompt(private val input: String) {
-    fun build(): String {
+
+    private fun buildPrompt(
+        historia: String,
+        ficha: Map<String, Any?>,
+        chatHistory: List<Pair<String, String>>
+    ): String {
+        val nombre = ficha["nombre"] ?: "Tu personaje"
+
+        val historial = chatHistory.joinToString("\n") { (sender, message) ->
+            if (sender == "player") "$nombre: $message" else "Narrador: $message"
+        }
+
         return """
-            Estás narrando un juego de rol de fantasía. El jugador ha dicho: "$input".
-            
-            Interpreta su frase como una acción o diálogo del personaje y responde con una narración breve y envolvente en tercera persona. Incluye reacciones del entorno o personajes si es relevante, sin salir del mundo del juego.
-        """.trimIndent()
+            Eres el narrador de un juego de rol de fantasía. La historia principal:
+
+            $historia
+
+            Personaje del jugador:
+            - Nombre: $nombre
+            - Raza: ${ficha["raza"]}
+            - Clase: ${ficha["clase"]}
+            - Nivel: ${ficha["nivel"]}
+            - HP: ${ficha["hp"]}
+            - CA: ${ficha["ca"]}
+            - Alineamiento: ${ficha["alineamiento"]}
+            - Personalidad: ${ficha["personalidad"]}
+            - Motivación: ${ficha["motivacion"]}
+            - Equipo: ${ficha["equipo"]}
+            - Mochila: ${ficha["mochila"]}
+
+            Conversación previa:
+            $historial
+
+            El jugador, actuando como $nombre, dice: $input
+
+             Responde al jugador en segunda persona. Mantén la respuesta breve (1 a 3 oraciones), enfocada en la acción o consecuencia inmediata. No salgas del mundo de juego.
+    """.trimIndent()
     }
 
     fun process(
@@ -25,57 +57,105 @@ class VoiceCommandPrompt(private val input: String) {
         onResult: (String) -> Unit = {},
         onError: (Exception) -> Unit = {}
     ) {
-        val apiService = ApiService()
-        val prompt = build()
-
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                // Enviar prompt a la IA
-                apiService.sendPrompt(prompt)
+                val db = RealTime()
 
-                // Esperar respuesta de la IA del flow
-                val state = apiService.uiState.first {
-                    it is UiState.Success || it is UiState.Error
-                }
+                db.getCampaignInfo(
+                    userId = userId,
+                    campaignName = worldName,
+                    onResult = { campaignData ->
+                        val historia = (campaignData["historia"] ?: "").toString()
+                            .replace("*", "")
+                            .replace("\"", "")
+                            .trim()
 
-                when (state) {
-                    is UiState.Success -> {
-                        val aiResponse = state.response
-                        val timestamp = System.currentTimeMillis()
+                        val characterName = (campaignData["nombre"] ?: userId).toString()
 
-                        // Guardar en el chat: mensaje del jugador
-                        AdventureRepository.addMessageToChat(
+                        db.getCharacterInfo(
                             userId = userId,
-                            worldName = worldName,
-                            messageId = "$timestamp",
-                            sender = "player",
-                            message = input
-                        )
+                            characterName = characterName,
+                            onResult = { characterData ->
 
-                        // Guardar en el chat: respuesta de la IA
-                        AdventureRepository.addMessageToChat(
-                            userId = userId,
-                            worldName = worldName,
-                            messageId = "${timestamp + 1}",
-                            sender = "dm",
-                            message = aiResponse
-                        )
+                                AdventureRepository.getChatHistory(
+                                    userId = userId,
+                                    worldName = worldName,
+                                    onResult = { chatList ->
 
-                        withContext(Dispatchers.Main) {
-                            onResult(aiResponse)
+                                        val orderedChat = chatList
+                                            .sortedBy { it.timestamp }
+                                            .map { it.sender to it.message }
+
+                                        val prompt = buildPrompt(historia, characterData, orderedChat)
+
+                                        val apiService = ApiService()
+                                        CoroutineScope(Dispatchers.IO).launch {
+                                            try {
+                                                apiService.sendPrompt(prompt)
+
+                                                val state = apiService.uiState.first {
+                                                    it is UiState.Success || it is UiState.Error
+                                                }
+
+                                                when (state) {
+                                                    is UiState.Success -> {
+                                                        val aiResponse = state.response
+                                                        val timestamp = System.currentTimeMillis()
+
+                                                        AdventureRepository.addMessageToChat(
+                                                            userId, worldName, "$timestamp", "player", input
+                                                        )
+                                                        AdventureRepository.addMessageToChat(
+                                                            userId, worldName, "${timestamp + 1}", "dm", aiResponse
+                                                        )
+
+                                                        withContext(Dispatchers.Main) {
+                                                            onResult(aiResponse)
+                                                        }
+                                                    }
+
+                                                    is UiState.Error -> {
+                                                        withContext(Dispatchers.Main) {
+                                                            onError(Exception(state.message))
+                                                        }
+                                                    }
+
+                                                    else -> {}
+                                                }
+                                            } catch (e: Exception) {
+                                                Log.e("VoiceCommandPrompt", "Error en IA", e)
+                                                withContext(Dispatchers.Main) {
+                                                    onError(e)
+                                                }
+                                            }
+                                        }
+
+                                    },
+                                    onError = { chatErr ->
+                                        Log.e("VoiceCommandPrompt", "Error al obtener chat", chatErr)
+                                        CoroutineScope(Dispatchers.Main).launch {
+                                            onError(chatErr)
+                                        }
+                                    }
+                                )
+                            },
+                            onError = { err ->
+                                Log.e("VoiceCommandPrompt", "Error al obtener personaje", err)
+                                CoroutineScope(Dispatchers.Main).launch {
+                                    onError(err)
+                                }
+                            }
+                        )
+                    },
+                    onError = { err ->
+                        Log.e("VoiceCommandPrompt", "Error al obtener historia", err)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            onError(err)
                         }
                     }
-
-                    is UiState.Error -> {
-                        withContext(Dispatchers.Main) {
-                            onError(Exception(state.message))
-                        }
-                    }
-
-                    else -> {}
-                }
+                )
             } catch (e: Exception) {
-                Log.e("VoiceCommandPrompt", "Error al procesar comando", e)
+                Log.e("VoiceCommandPrompt", "Error inesperado", e)
                 withContext(Dispatchers.Main) {
                     onError(e)
                 }

@@ -1,5 +1,7 @@
 package com.bit_chronicles.model.firebase
 
+import android.util.Log
+import com.bit_chronicles.model.ChatMessage
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -62,5 +64,35 @@ object AdventureRepository {
         )
         val path = "aventuras/$userId/$worldName/chat/0"
         db.write(path, msg, onSuccess, onError)
+    }
+
+    fun getChatHistory(
+        userId: String,
+        worldName: String,
+        onResult: (List<ChatMessage>) -> Unit,
+        onError: (Exception) -> Unit = {}
+    ) {
+        val path = "aventuras/$userId/$worldName/chat"
+
+        db.read(path,
+            onSuccess = { snapshot ->
+                val chatList = mutableListOf<ChatMessage>()
+
+                snapshot.children.forEach { child ->
+                    val sender = child.child("sender").getValue(String::class.java) ?: ""
+                    val message = child.child("message").getValue(String::class.java) ?: ""
+                    val timestamp = child.child("timestamp").getValue(Long::class.java) ?: 0L
+
+                    chatList.add(ChatMessage(sender, message, timestamp))
+                }
+
+                chatList.sortBy { it.timestamp }
+                onResult(chatList)
+            },
+            onError = { exception ->
+                Log.e("AdventureRepository", "Error al obtener chat: ${exception.message}")
+                onError(exception)
+            }
+        )
     }
 }
