@@ -175,7 +175,7 @@ class VoiceCommandPrompt(private val input: String) {
                                                         val timestamp = System.currentTimeMillis()
 
                                                         AdventureRepository.addMessageToChat(
-                                                            userId, worldName, "$timestamp", currentPlayerName , input
+                                                            userId, worldName, "$timestamp", "player" , input
                                                         )
                                                         AdventureRepository.addMessageToChat(
                                                             userId, worldName, "${timestamp + 1}", "dm", aiResponse
