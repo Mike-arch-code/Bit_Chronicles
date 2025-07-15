@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bit_chronicles">
 
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -14,6 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Bit_Chronicles"
         tools:targetApi="31">
+
         <activity
             android:name=".viewmodel.splash.SplashActivity"
             android:exported="true"
@@ -23,17 +25,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".viewmodel.auth.LoginActivity"/>
-        <activity android:name=".viewmodel.home.HomeActivity"/>
-        <activity android:name=".viewmodel.character.CharacterActivity"/>
-        <activity android:name=".viewmodel.campaign.CampaignActivity"/>
-        <activity android:name=".viewmodel.campaign.CreateCampaignActivity"/>
-        <activity android:name=".viewmodel.character.CreateCharacterActivity"/>
-        <activity android:name=".viewmodel.campaign.CampaignListActivity"/>
-        <activity android:name=".viewmodel.campaign.CampaignInfoActivity"/>
-        <activity android:name=".viewmodel.map.MapActivity"/>
-        <activity android:name=".viewmodel.character.CharacterListActivity"/>
-        <activity android:name=".viewmodel.character.CharacterinfoActivity"/>
+
+        <activity android:name=".viewmodel.auth.LoginActivity" />
+        <activity android:name=".viewmodel.home.HomeActivity" />
+        <activity android:name=".viewmodel.character.CharacterActivity" />
+        <activity android:name=".viewmodel.campaign.CampaignActivity" />
+        <activity android:name=".viewmodel.campaign.CreateCampaignActivity" />
+        <activity android:name=".viewmodel.character.CreateCharacterActivity" />
+        <activity android:name=".viewmodel.campaign.CampaignListActivity" />
+        <activity android:name=".viewmodel.campaign.CampaignInfoActivity" />
+        <activity android:name=".viewmodel.map.MapActivity" />
+        <activity android:name=".viewmodel.character.CharacterListActivity" />
+        <activity android:name=".viewmodel.character.CharacterinfoActivity" />
+        <activity android:name=".viewmodel.DiceRollActivity" /> <!-- Asegúrate de registrar tu actividad del dado -->
+
     </application>
 
 </manifest>

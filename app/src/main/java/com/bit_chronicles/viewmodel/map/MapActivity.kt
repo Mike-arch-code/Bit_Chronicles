@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import com.bit_chronicles.R
 import com.bit_chronicles.model.VoiceCommandPrompt
 import com.bit_chronicles.model.firebase.RealTime
+import com.bit_chronicles.viewmodel.DiceRollFragment
 import java.util.*
 
 class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
@@ -44,12 +45,20 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         val playerListLayout = findViewById<LinearLayout>(R.id.player_list)
 
-        // Botón de voz
+        // BOTÓN DE VOZ
         findViewById<Button>(R.id.btnVoice).setOnClickListener {
             startListeningFallback()
         }
 
-        // Obtener jugadores desde Firebase
+        // BOTÓN DE DADO → MOSTRAR FRAGMENTO
+        findViewById<Button>(R.id.btnDice).setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.game_fragment_container, DiceRollFragment())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        // OBTENER JUGADORES DESDE FIREBASE
         db.getCampaignInfo(
             userId = "Mike",
             campaignName = worldName,
