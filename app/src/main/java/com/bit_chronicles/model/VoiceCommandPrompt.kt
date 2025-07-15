@@ -17,7 +17,8 @@ class VoiceCommandPrompt(private val input: String) {
         historia: String,
         ficha: Map<String, Any?>,
         chatHistory: List<Pair<String, String>>,
-        turnos: String
+        turnos: String,
+        players: String
     ): String {
         val nombre = ficha["nombre"] ?: "Tu personaje"
 
@@ -89,24 +90,37 @@ class VoiceCommandPrompt(private val input: String) {
                             .trim()
 
                         val turnos = (campaignData["turnos"] ?: userId).toString()
+                        val players = (campaignData["players"] ?: userId).toString()
+                        val playerList = players.split(",").map { it.trim() }
 
-                        val characterName = (campaignData["nombre"] ?: userId).toString()
-
-                        db.getCharacterInfo(
+                        Log.d("TurnoDebug", "Lista de jugadores: $players$turnos")
+                        AdventureRepository.getChatHistory(
                             userId = userId,
-                            characterName = characterName,
-                            onResult = { characterData ->
+                            worldName = worldName,
+                            onResult = { chatList ->
 
-                                AdventureRepository.getChatHistory(
+                                val orderedChat = chatList.sortedBy { it.timestamp }
+
+                                val playerMessages = orderedChat.filter { it.sender == "player" }
+                                val currentPlayerIndex = playerMessages.size % playerList.size
+                                val currentPlayerName = playerList[currentPlayerIndex]
+
+                                Log.d("JugadorActual", "Es el turno de: $currentPlayerName")
+
+                                db.getCharacterInfo(
                                     userId = userId,
-                                    worldName = worldName,
-                                    onResult = { chatList ->
+                                    characterName = currentPlayerName,
+                                    onResult = { characterData ->
 
-                                        val orderedChat = chatList
-                                            .sortedBy { it.timestamp }
-                                            .map { it.sender to it.message }
+                                        val chatHistory = orderedChat.map { it.sender to it.message }
 
-                                        val prompt = buildPrompt(historia, characterData, orderedChat,turnos)
+                                        val prompt = buildPrompt(
+                                            historia = historia,
+                                            ficha = characterData,
+                                            chatHistory = chatHistory,
+                                            turnos = turnos,
+                                            players = players
+                                        )
 
                                         val apiService = ApiService()
                                         CoroutineScope(Dispatchers.IO).launch {
@@ -151,18 +165,18 @@ class VoiceCommandPrompt(private val input: String) {
                                         }
 
                                     },
-                                    onError = { chatErr ->
-                                        Log.e("VoiceCommandPrompt", "Error al obtener chat", chatErr)
+                                    onError = { err ->
+                                        Log.e("VoiceCommandPrompt", "Error al obtener personaje", err)
                                         CoroutineScope(Dispatchers.Main).launch {
-                                            onError(chatErr)
+                                            onError(err)
                                         }
                                     }
                                 )
                             },
-                            onError = { err ->
-                                Log.e("VoiceCommandPrompt", "Error al obtener personaje", err)
+                            onError = { chatErr ->
+                                Log.e("VoiceCommandPrompt", "Error al obtener chat", chatErr)
                                 CoroutineScope(Dispatchers.Main).launch {
-                                    onError(err)
+                                    onError(chatErr)
                                 }
                             }
                         )

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bit_chronicles.R
@@ -21,6 +22,7 @@ class CreateCampaignActivity : AppCompatActivity() {
 
     private val apiService: ApiService by viewModels()
     private val db = RealTime()
+    private val selectedPlayers = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,8 @@ class CreateCampaignActivity : AppCompatActivity() {
         val spinnerTone = findViewById<Spinner>(R.id.spinnerTone)
         val spinerturnos = findViewById<Spinner>(R.id.spinnerturnos)
 
-        val spinnerPlayer = findViewById<Spinner>(R.id.spinnerplayer)
+        val spinnerPlayer = findViewById<TextView>(R.id.spinnerplayer)
+
 
         // Inicializar los spinners con recursos
         ArrayAdapter.createFromResource(this, R.array.setting_types, android.R.layout.simple_spinner_item).also {
@@ -71,7 +74,7 @@ class CreateCampaignActivity : AppCompatActivity() {
         // Enviar prompt
         sendButton.setOnClickListener {
             val userId = "Mike"
-            val characterName = spinnerPlayer.selectedItem.toString()
+            val characterName = selectedPlayers.joinToString(", ")
 
             db.getCharacterInfo(
                 userId = userId,
@@ -89,6 +92,7 @@ class CreateCampaignActivity : AppCompatActivity() {
                     val keyLocations = editKeyLocations.text.toString().trim()
                     val objective = editObjective.text.toString().trim()
                     val turnos = spinerturnos.selectedItem.toString()
+
 
                     val prompt = AdventurePrompt(
                         worldName,
@@ -115,7 +119,6 @@ class CreateCampaignActivity : AppCompatActivity() {
         }
 
 
-        // Observar respuesta de la API
         lifecycleScope.launch {
             apiService.uiState.collectLatest { state ->
                 when (state) {
@@ -136,6 +139,7 @@ class CreateCampaignActivity : AppCompatActivity() {
                             "tone" to spinnerTone.selectedItem.toString(),
                             "createdAt" to System.currentTimeMillis(),
                             "turnos" to  spinerturnos.selectedItem.toString(),
+                            "player" to selectedPlayers.joinToString(", ")
                         )
 
                         val userId = "Mike"
@@ -162,35 +166,33 @@ class CreateCampaignActivity : AppCompatActivity() {
 
     private fun cargarPalyer() {
         val userId = "Mike"
-        val spinnerPlayer = findViewById<Spinner>(R.id.spinnerplayer)
+        val spinnerPlayer = findViewById<TextView>(R.id.spinnerplayer)
 
         db.getCharacterList(
             userId,
             onResult = { lista ->
-                val nombresPersonajes = lista // Asegúrate que el campo sea 'name'
+                val items = lista.toTypedArray()
+                val selectedItems = BooleanArray(items.size)
 
-                val adapter = ArrayAdapter(
-                    this,
-                    android.R.layout.simple_spinner_item,
-                    nombresPersonajes
-                )
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinnerPlayer.adapter = adapter
+                spinnerPlayer.setOnClickListener {
+                    AlertDialog.Builder(this)
+                        .setTitle("Selecciona jugadores")
+                        .setMultiChoiceItems(items, selectedItems) { _, which, isChecked ->
+                            selectedItems[which] = isChecked
+                        }
+                        .setPositiveButton("Aceptar") { _, _ ->
+                            selectedPlayers.clear()
+                            val seleccionados = items.filterIndexed { index, _ -> selectedItems[index] }
+                            selectedPlayers.addAll(seleccionados)
 
-                spinnerPlayer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                    override fun onItemSelected(
-                        parent: AdapterView<*>,
-                        view: View?,
-                        position: Int,
-                        id: Long
-                    ) {
-                        val seleccionado = nombresPersonajes[position]
-                        Log.d("SpinnerPlayer", "Seleccionado: $seleccionado")
-                    }
-
-                    override fun onNothingSelected(parent: AdapterView<*>) {
-                        // Nada seleccionado
-                    }
+                            spinnerPlayer.text = if (selectedPlayers.isEmpty()) {
+                                "Seleccionar jugadores"
+                            } else {
+                                selectedPlayers.joinToString(", ")
+                            }
+                        }
+                        .setNegativeButton("Cancelar", null)
+                        .show()
                 }
             },
             onError = {

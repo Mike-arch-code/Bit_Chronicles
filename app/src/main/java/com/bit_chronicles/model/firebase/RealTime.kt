@@ -70,12 +70,14 @@ class RealTime {
             val historia = historiaSnapshot.value as? String ?: ""
 
             rootRef.child(metadataPath).get().addOnSuccessListener { metadataSnapshot ->
-                val turnos = metadataSnapshot.child("turnos").getValue(Int::class.java) ?: 10
-
+                val turnos = metadataSnapshot.child("turnos").getValue(String::class.java) ?: ""
+                val players = metadataSnapshot.child("player").getValue(String::class.java) ?: ""
                 val result = mapOf(
                     "campaignName" to campaignName,
                     "historia" to historia,
-                    "turnos" to turnos
+                    "turnos" to turnos,
+                    "players" to players
+
                 )
                 onResult(result)
 

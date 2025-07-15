@@ -58,11 +58,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Player" />
-        <Spinner
+        <TextView
             android:id="@+id/spinnerplayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="48dp" />
+            android:minHeight="48dp"
+            android:padding="12dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawableEnd="@drawable/ic_arrow_drop_down"
+            android:gravity="center_vertical"
+            android:text="Seleccionar jugadores"
+            android:focusable="true"
+            android:clickable="true" />
 
         <!-- Razas o facciones -->
         <EditText
