@@ -60,7 +60,7 @@ class VoiceCommandPrompt(private val input: String) {
         $historia
 
         Personaje del jugador actual:
-        - Nombre: $nombre
+        - Nombre: $jugadorActual
         - Raza: ${ficha["raza"]}
         - Clase: ${ficha["clase"]}
         - Nivel: ${ficha["nivel"]}
@@ -77,7 +77,7 @@ class VoiceCommandPrompt(private val input: String) {
         Conversación previa:
         $historial
 
-        El jugador, actuando como $nombre, dice: $input
+        El jugador, actuando como $jugadorActual, dice: $input
         
         Responde en segunda persona y en voz natural. Si es el primer mensaje de un jugador, presenta brevemente el mundo, el conflicto principal y el tono, sin frases cliché como “tierras olvidadas” o “el viento sopla”. A partir de ahí, las respuestas deben tener alrededor de **tres frases**, centradas en las consecuencias inmediatas de las acciones. Solo da respuestas más largas si el jugador explícitamente pide contexto o explicación.
 

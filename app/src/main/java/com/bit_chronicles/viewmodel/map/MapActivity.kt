@@ -1,15 +1,21 @@
 package com.bit_chronicles.viewmodel.map
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.Gravity
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.bit_chronicles.R
 import com.bit_chronicles.model.VoiceCommandPrompt
 import com.bit_chronicles.model.firebase.RealTime
@@ -21,8 +27,11 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private var isTtsReady = false
     private lateinit var worldName: String
     private val vozPorDefecto = "es-es-x-eed-network"
+    private val db = RealTime()
 
-    val db = RealTime()
+    private val jugadorCirculos = mutableMapOf<String, View>()
+    private val listaJugadores = mutableListOf<String>()
+    private var turnoActual = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,20 +42,24 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         checkAudioPermission()
         tts = TextToSpeech(this, this)
 
+        val playerListLayout = findViewById<LinearLayout>(R.id.player_list)
+
+        // Botón de voz
         findViewById<Button>(R.id.btnVoice).setOnClickListener {
             startListeningFallback()
         }
 
-        // Obtener jugadores y mostrarlos en pantalla
+        // Obtener jugadores desde Firebase
         db.getCampaignInfo(
-            userId = "Mike", // puedes cambiarlo si tienes otro usuario actual
+            userId = "Mike",
             campaignName = worldName,
             onResult = { data ->
                 val playersRaw = data["players"] as? String ?: ""
                 val players = playersRaw.split(",").map { it.trim().replaceFirstChar { c -> c.uppercase() } }
 
                 players.forEachIndexed { index, name ->
-                    agregarJugador(name, index == 0) // el primero es el que tiene el turno
+                    listaJugadores.add(name)
+                    agregarJugador(name, index == 0, this, playerListLayout, jugadorCirculos)
                 }
             },
             onError = { e ->
@@ -94,6 +107,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                 userId = "Mike",
                 worldName = worldName,
                 onResult = { response ->
+                    avanzarTurno()
                     Log.d("IA", "Respuesta: $response")
                     speakText(response)
                 },
@@ -107,7 +121,6 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     override fun onInit(status: Int) {
         if (status == TextToSpeech.SUCCESS) {
             isTtsReady = true
-
             tts?.language = Locale("es", "ES")
             tts?.setPitch(0.6f)
             tts?.setSpeechRate(0.9f)
@@ -119,7 +132,6 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             } else {
                 Log.w("TTS", "Voz '${vozPorDefecto}' no encontrada.")
             }
-
         } else {
             Log.e("TTS", "Fallo al inicializar TTS")
         }
@@ -152,29 +164,64 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         }
     }
 
-    // 👥 Muestra jugador con bombillito
-    private fun agregarJugador(nombre: String, esTurno: Boolean) {
-        val layout = findViewById<LinearLayout>(R.id.playerIndicators)
-        val jugador = LinearLayout(this).apply {
+    fun agregarJugador(
+        nombre: String,
+        esActivo: Boolean,
+        context: Context,
+        playerListLayout: LinearLayout,
+        jugadorCirculos: MutableMap<String, View>
+    ) {
+        val contenedor = LinearLayout(context).apply {
             orientation = LinearLayout.HORIZONTAL
-            setPadding(0, 8, 0, 8)
-
-            val bombillo = TextView(context).apply {
-                text = if (esTurno) "🔆" else "💤"
-                textSize = 20f
-            }
-
-            val nombreText = TextView(context).apply {
-                text = nombre
-                textSize = 18f
-                setPadding(12, 0, 0, 0)
-                setTextColor(getColor(R.color.texto_oscuro))
-            }
-
-            addView(bombillo)
-            addView(nombreText)
+            gravity = Gravity.CENTER_VERTICAL
+            setPadding(16, 8, 16, 8)
         }
 
-        layout.addView(jugador)
+        val colorInicial = if (esActivo) "#00FF00" else "#FF0000"
+        val circulo = View(context).apply {
+            layoutParams = LinearLayout.LayoutParams(32, 32).apply {
+                gravity = Gravity.CENTER_VERTICAL
+                marginEnd = 16
+            }
+            background = GradientDrawable().apply {
+                shape = GradientDrawable.OVAL
+                setColor(Color.parseColor(colorInicial))
+                setStroke(4, Color.WHITE)
+            }
+        }
+
+        jugadorCirculos[nombre] = circulo
+
+        val texto = TextView(context).apply {
+            text = nombre
+            setTextColor(ContextCompat.getColor(context, R.color.texto_oscuro))
+            textSize = 16f
+        }
+
+        contenedor.addView(circulo)
+        contenedor.addView(texto)
+
+        playerListLayout.addView(contenedor)
+    }
+
+    fun actualizarEstadoJugador(nombre: String, esActivo: Boolean, jugadorCirculos: Map<String, View>) {
+        val circulo = jugadorCirculos[nombre] ?: return
+        val nuevoColor = if (esActivo) "#00FF00" else "#FF0000"
+        val drawable = GradientDrawable().apply {
+            shape = GradientDrawable.OVAL
+            setColor(Color.parseColor(nuevoColor))
+            setStroke(4, Color.WHITE)
+        }
+        circulo.background = drawable
+    }
+
+    private fun avanzarTurno() {
+        val jugadorActual = listaJugadores[turnoActual]
+        actualizarEstadoJugador(jugadorActual, false, jugadorCirculos)
+
+        turnoActual = (turnoActual + 1) % listaJugadores.size
+
+        val siguienteJugador = listaJugadores[turnoActual]
+        actualizarEstadoJugador(siguienteJugador, true, jugadorCirculos)
     }
 }
