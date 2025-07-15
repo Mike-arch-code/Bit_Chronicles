@@ -47,7 +47,7 @@ class VoiceCommandPrompt(private val input: String) {
 
             El jugador, actuando como $nombre, dice: $input
 
-             Responde al jugador en segunda persona. Mantén la respuesta breve (1 a 3 oraciones), enfocada en la acción o consecuencia inmediata. No salgas del mundo de juego.
+            Responde al jugador en segunda persona. Mantén la respuesta breve (1 a 3 oraciones), enfocada en la acción o consecuencia inmediata. No salgas del mundo de juego.
     """.trimIndent()
     }
 
