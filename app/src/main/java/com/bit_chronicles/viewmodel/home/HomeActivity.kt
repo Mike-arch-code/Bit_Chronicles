@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.viewmodel.character.CharacterActivity
 import com.bit_chronicles.viewmodel.campaign.CampaignActivity
+import android.widget.ImageButton
 
 class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,6 +16,13 @@ class HomeActivity : AppCompatActivity() {
 
         val botoncampañas = findViewById<Button>(R.id.botoncampañas)
         val botonpjs = findViewById<Button>(R.id.botonpjs)
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
 
         botoncampañas.setOnClickListener {
             val intent = Intent(this, CampaignActivity::class.java)

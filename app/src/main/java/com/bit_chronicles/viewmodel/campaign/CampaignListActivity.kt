@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.model.firebase.RealTime
+import android.widget.ImageButton
 
 class CampaignListActivity : AppCompatActivity() {
 
@@ -21,6 +22,12 @@ class CampaignListActivity : AppCompatActivity() {
 
         campaignListContainer = findViewById(R.id.campaignListContainer)
         cargarCampañas()
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     private fun cargarCampañas() {

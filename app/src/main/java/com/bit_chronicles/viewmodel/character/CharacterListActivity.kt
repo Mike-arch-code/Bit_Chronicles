@@ -9,12 +9,14 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.model.firebase.RealTime
-import com.bit_chronicles.viewmodel.campaign.CampaignInfoActivity
+import android.widget.ImageButton
 
 class CharacterListActivity : AppCompatActivity() {
 
     private lateinit var characterListContainer: LinearLayout
     private val db = RealTime()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,13 @@ class CharacterListActivity : AppCompatActivity() {
 
         characterListContainer = findViewById(R.id.characterListContainer)
         cargarPersonajes()
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
     }
 
     private fun cargarPersonajes() {
