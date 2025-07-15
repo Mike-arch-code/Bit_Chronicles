@@ -30,7 +30,7 @@ class VoiceCommandPrompt(private val input: String) {
 
         for ((sender, message) in chatHistory) {
             if (sender == "player") {
-                val nombreJugador = playerList[playerIndex % playerList.size]
+                val nombreJugador = jugadorActual
                 historial.add("$nombreJugador: $message")
                 playerIndex++
             } else {
@@ -153,7 +153,7 @@ class VoiceCommandPrompt(private val input: String) {
                                                         val timestamp = System.currentTimeMillis()
 
                                                         AdventureRepository.addMessageToChat(
-                                                            userId, worldName, "$timestamp", "player", input
+                                                            userId, worldName, "$timestamp", currentPlayerName , input
                                                         )
                                                         AdventureRepository.addMessageToChat(
                                                             userId, worldName, "${timestamp + 1}", "dm", aiResponse
