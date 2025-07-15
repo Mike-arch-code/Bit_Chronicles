@@ -21,7 +21,6 @@ class CreateCharacterActivity : AppCompatActivity() {
     private lateinit var spinnerRace: Spinner
     private lateinit var spinnerClass: Spinner
     private lateinit var spinnerBackground: Spinner
-    private lateinit var radioGroupAlignment: RadioGroup
     private lateinit var editPersonality: EditText
     private lateinit var editAbilities: EditText
     private lateinit var editMotivation: EditText
@@ -35,12 +34,13 @@ class CreateCharacterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_creat_person)
 
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+
         // Bind UI
         editName = findViewById(R.id.editCharacterName)
         spinnerRace = findViewById(R.id.spinnerRace)
         spinnerClass = findViewById(R.id.spinnerClass)
         spinnerBackground = findViewById(R.id.spinnerBackground)
-        radioGroupAlignment = findViewById(R.id.radioGroupAlignment)
         editPersonality = findViewById(R.id.editPersonalityTraits)
         editAbilities = findViewById(R.id.editAbilities)
         editMotivation = findViewById(R.id.editMotivation)
@@ -75,18 +75,18 @@ class CreateCharacterActivity : AppCompatActivity() {
             spinnerBackground.adapter = it
         }
 
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         // Botón para generar el personaje con la IA
         buttonCreate.setOnClickListener {
-            val alignmentId = radioGroupAlignment.checkedRadioButtonId
-            val selectedRadio = findViewById<RadioButton>(alignmentId)
-            val alignment = selectedRadio?.text?.toString() ?: "Neutral"
 
             val prompt = CharacterPrompt(
                 name = editName.text.toString().trim(),
                 race = spinnerRace.selectedItem.toString(),
                 characterClass = spinnerClass.selectedItem.toString(),
                 background = spinnerBackground.selectedItem.toString(),
-                alignment = alignment,
                 personalityTraits = editPersonality.text.toString().trim(),
                 abilities = editAbilities.text.toString().trim(),
                 motivation = editMotivation.text.toString().trim()
@@ -106,16 +106,12 @@ class CreateCharacterActivity : AppCompatActivity() {
                         responseTextView.text = story
 
                         val characterName = editName.text.toString().trim()
-                        val alignmentId = radioGroupAlignment.checkedRadioButtonId
-                        val selectedRadio = findViewById<RadioButton>(alignmentId)
-                        val alignment = selectedRadio?.text?.toString() ?: "Neutral"
 
                         val metadata = mapOf(
                             "nombre" to characterName,
                             "raza" to spinnerRace.selectedItem.toString(),
                             "clase" to spinnerClass.selectedItem.toString(),
                             "fondo" to spinnerBackground.selectedItem.toString(),
-                            "alineamiento" to alignment,
                             "personalidad" to editPersonality.text.toString().trim(),
                             "habilidades" to editAbilities.text.toString().trim(),
                             "motivación" to editMotivation.text.toString().trim()

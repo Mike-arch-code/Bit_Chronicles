@@ -55,68 +55,6 @@
             android:minHeight="48dp"
             android:layout_marginTop="8dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/alignment_label"
-            android:layout_marginTop="12dp" />
-
-        <RadioGroup
-            android:id="@+id/radioGroupAlignment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioLegal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alignment_legal"
-                android:contentDescription="Alineación Legal" />
-
-            <RadioButton
-                android:id="@+id/radioNeutral"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alignment_neutral"
-                android:contentDescription="Alineación Neutral" />
-
-            <RadioButton
-                android:id="@+id/radioChaotic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alignment_chaotic"
-                android:contentDescription="Alineación Caótica" />
-        </RadioGroup>
-
-        <RadioGroup
-            android:id="@+id/radioGroupMoral"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioGood"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/moral_good"
-                android:contentDescription="Moral Bueno" />
-
-            <RadioButton
-                android:id="@+id/radioMoralNeutral"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/moral_neutral"
-                android:contentDescription="Moral Neutral" />
-
-            <RadioButton
-                android:id="@+id/radioEvil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/moral_evil"
-                android:contentDescription="Moral Malvado" />
-        </RadioGroup>
-
         <EditText
             android:id="@+id/editPersonalityTraits"
             android:layout_width="match_parent"

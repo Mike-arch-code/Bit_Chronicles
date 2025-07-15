@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.model.firebase.RealTime
+import android.widget.ImageButton
 
 class CharacterinfoActivity : AppCompatActivity() {
 
@@ -15,8 +16,15 @@ class CharacterinfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_character_info)
 
+
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
         val userId = "Mike"
         val characterName = intent.getStringExtra("characterName") ?: return
+
+
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         db.getCharacterInfo(
             userId = userId,

@@ -8,5 +8,10 @@
     <color name="sangre">#591D1D</color>
     <color name="gris">#C3C3C3</color>
     <color name="beige">#C1B9AE</color>
+    <color name="texto_oscuro">#212121</color>
+    <color name="verde_brilante">#00FF00</color>
+    <color name="rojo_brilante">#FF3B3B</color>
+
+
 
 </resources>

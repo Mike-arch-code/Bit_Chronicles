@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bit_chronicles.R
 import com.bit_chronicles.model.firebase.RealTime
 import com.bit_chronicles.viewmodel.map.MapActivity
+import android.widget.ImageButton
 
 class CampaignInfoActivity : AppCompatActivity() {
 
@@ -18,6 +19,10 @@ class CampaignInfoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_campaign_info)
 
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         val userId = "Mike"
         val campaignName = intent.getStringExtra("campaignName") ?: return
 

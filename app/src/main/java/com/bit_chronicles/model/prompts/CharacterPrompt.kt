@@ -5,7 +5,6 @@ class CharacterPrompt(
     private val race: String,
     private val characterClass: String,
     private val background: String,
-    private val alignment: String,
     private val personalityTraits: String,
     private val abilities: String,
     private val motivation: String
@@ -20,7 +19,6 @@ class CharacterPrompt(
             - Raza: $race
             - Clase: $characterClass
             - Trasfondo: $background
-            - Alineamiento: $alignment
             - Rasgos de personalidad: $personalityTraits
             - Habilidades iniciales (no estadísticas): $abilities
             - Motivación personal: $motivation
