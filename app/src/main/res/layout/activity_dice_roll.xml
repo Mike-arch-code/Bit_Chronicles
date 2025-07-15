@@ -1,32 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+<!-- res/layout/fragment_dice_roll.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/diceContainer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center">
 
     <ImageView
         android:id="@+id/diceImage"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:contentDescription="Imagen del dado"
-        android:src="@drawable/dado1" />
-
-    <TextView
-        android:id="@+id/diceResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resultado: -"
-        android:textSize="20sp"
-        android:layout_marginTop="16dp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/rollButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Lanzar Dado"
-        android:layout_marginTop="24dp" />
-
-</LinearLayout>
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/dado1"
+        android:contentDescription="Dado"
+        android:clickable="true"
+        android:focusable="true" />
+</FrameLayout>

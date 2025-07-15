@@ -52,11 +52,23 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
         // BOTÓN DE DADO → MOSTRAR FRAGMENTO
         findViewById<Button>(R.id.btnDice).setOnClickListener {
+            val diceFragment = DiceRollFragment()
+
+            // Registrar callback para recibir el resultado
+            diceFragment.onDiceRolled = { resultado ->
+                // Aquí puedes usar el resultado como quieras
+                Log.d("ResultadoDado", "Resultado: $resultado")
+
+                // Ejemplo: actualizar UI o lógica de turno
+                // actualizarTurnoConDado(resultado)
+            }
+
             supportFragmentManager.beginTransaction()
-                .replace(R.id.game_fragment_container, DiceRollFragment())
+                .replace(R.id.game_fragment_container, diceFragment)
                 .addToBackStack(null)
                 .commit()
         }
+
 
         // OBTENER JUGADORES DESDE FIREBASE
         db.getCampaignInfo(

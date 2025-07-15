@@ -6,20 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.bit_chronicles.R
 
 class DiceRollFragment : Fragment() {
 
     private lateinit var diceImage: ImageView
-    private lateinit var diceResult: TextView
-    private lateinit var rollButton: Button
     private var finalResult: Int = -1
 
-    var onDiceRolled: ((Int) -> Unit)? = null // callback opcional
+    var onDiceRolled: ((Int) -> Unit)? = null // callback accesible desde fuera
+    val resultado get() = finalResult // propiedad pública para acceder desde el host
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +25,8 @@ class DiceRollFragment : Fragment() {
         val view = inflater.inflate(R.layout.activity_dice_roll, container, false)
 
         diceImage = view.findViewById(R.id.diceImage)
-        diceResult = view.findViewById(R.id.diceResult)
-        rollButton = view.findViewById(R.id.rollButton)
 
-        rollButton.setOnClickListener {
+        diceImage.setOnClickListener {
             rollDice()
         }
 
@@ -53,7 +48,9 @@ class DiceRollFragment : Fragment() {
         val imageCycler = object : Runnable {
             override fun run() {
                 val tempResult = (1..20).random()
-                val tempImageId = resources.getIdentifier("dado$tempResult", "drawable", requireContext().packageName)
+                val tempImageId = resources.getIdentifier(
+                    "dado$tempResult", "drawable", requireContext().packageName
+                )
                 diceImage.setImageResource(tempImageId)
 
                 elapsed += frameInterval
@@ -61,11 +58,12 @@ class DiceRollFragment : Fragment() {
                     handler.postDelayed(this, frameInterval)
                 } else {
                     finalResult = (1..20).random()
-                    val finalImageId = resources.getIdentifier("dado$finalResult", "drawable", requireContext().packageName)
+                    val finalImageId = resources.getIdentifier(
+                        "dado$finalResult", "drawable", requireContext().packageName
+                    )
                     diceImage.setImageResource(finalImageId)
-                    diceResult.text = "Resultado: $finalResult"
 
-                    onDiceRolled?.invoke(finalResult) // comunicar resultado
+                    onDiceRolled?.invoke(finalResult)
                 }
             }
         }
