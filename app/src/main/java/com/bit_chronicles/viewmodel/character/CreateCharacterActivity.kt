@@ -21,7 +21,6 @@ class CreateCharacterActivity : AppCompatActivity() {
     private lateinit var spinnerRace: Spinner
     private lateinit var spinnerClass: Spinner
     private lateinit var spinnerBackground: Spinner
-    private lateinit var radioGroupAlignment: RadioGroup
     private lateinit var editPersonality: EditText
     private lateinit var editAbilities: EditText
     private lateinit var editMotivation: EditText
@@ -107,16 +106,12 @@ class CreateCharacterActivity : AppCompatActivity() {
                         responseTextView.text = story
 
                         val characterName = editName.text.toString().trim()
-                        val alignmentId = radioGroupAlignment.checkedRadioButtonId
-                        val selectedRadio = findViewById<RadioButton>(alignmentId)
-                        val alignment = selectedRadio?.text?.toString() ?: "Neutral"
 
                         val metadata = mapOf(
                             "nombre" to characterName,
                             "raza" to spinnerRace.selectedItem.toString(),
                             "clase" to spinnerClass.selectedItem.toString(),
                             "fondo" to spinnerBackground.selectedItem.toString(),
-                            "alineamiento" to alignment,
                             "personalidad" to editPersonality.text.toString().trim(),
                             "habilidades" to editAbilities.text.toString().trim(),
                             "motivación" to editMotivation.text.toString().trim()

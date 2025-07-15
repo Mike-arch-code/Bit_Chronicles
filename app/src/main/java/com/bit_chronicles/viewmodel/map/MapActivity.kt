@@ -7,26 +7,24 @@ import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.widget.Button
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.bit_chronicles.R
 import com.bit_chronicles.model.VoiceCommandPrompt
-import java.util.Locale
+import com.bit_chronicles.model.firebase.RealTime
+import java.util.*
 
 class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
     private var tts: TextToSpeech? = null
     private var isTtsReady = false
     private lateinit var worldName: String
-
-    // Esta es la voz predeterminada que quieres usar
     private val vozPorDefecto = "es-es-x-eed-network"
 
+    val db = RealTime()
+
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map)
 
@@ -38,6 +36,23 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         findViewById<Button>(R.id.btnVoice).setOnClickListener {
             startListeningFallback()
         }
+
+        // Obtener jugadores y mostrarlos en pantalla
+        db.getCampaignInfo(
+            userId = "Mike", // puedes cambiarlo si tienes otro usuario actual
+            campaignName = worldName,
+            onResult = { data ->
+                val playersRaw = data["players"] as? String ?: ""
+                val players = playersRaw.split(",").map { it.trim().replaceFirstChar { c -> c.uppercase() } }
+
+                players.forEachIndexed { index, name ->
+                    agregarJugador(name, index == 0) // el primero es el que tiene el turno
+                }
+            },
+            onError = { e ->
+                Log.e("Campaña", "Error al cargar campaña: ${e.message}")
+            }
+        )
     }
 
     private fun checkAudioPermission() {
@@ -77,7 +92,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
 
             VoiceCommandPrompt(text).process(
                 userId = "Mike",
-                worldName =worldName,
+                worldName = worldName,
                 onResult = { response ->
                     Log.d("IA", "Respuesta: $response")
                     speakText(response)
@@ -94,10 +109,9 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
             isTtsReady = true
 
             tts?.language = Locale("es", "ES")
-            tts?.setPitch(0.6f) // tono más grave (1.0 es neutro)
+            tts?.setPitch(0.6f)
             tts?.setSpeechRate(0.9f)
 
-            // Establecer la voz por defecto si existe
             val voz = tts?.voices?.firstOrNull { it.name == vozPorDefecto }
             if (voz != null) {
                 tts?.voice = voz
@@ -136,5 +150,31 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
         } else {
             Log.e("Permission", "Audio permission denied")
         }
+    }
+
+    // 👥 Muestra jugador con bombillito
+    private fun agregarJugador(nombre: String, esTurno: Boolean) {
+        val layout = findViewById<LinearLayout>(R.id.playerIndicators)
+        val jugador = LinearLayout(this).apply {
+            orientation = LinearLayout.HORIZONTAL
+            setPadding(0, 8, 0, 8)
+
+            val bombillo = TextView(context).apply {
+                text = if (esTurno) "🔆" else "💤"
+                textSize = 20f
+            }
+
+            val nombreText = TextView(context).apply {
+                text = nombre
+                textSize = 18f
+                setPadding(12, 0, 0, 0)
+                setTextColor(getColor(R.color.texto_oscuro))
+            }
+
+            addView(bombillo)
+            addView(nombreText)
+        }
+
+        layout.addView(jugador)
     }
 }

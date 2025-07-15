@@ -11,7 +11,6 @@ import android.widget.ImageButton
 class CharacterinfoActivity : AppCompatActivity() {
 
     private val db = RealTime()
-    val btnBack = findViewById<ImageButton>(R.id.btnBack)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

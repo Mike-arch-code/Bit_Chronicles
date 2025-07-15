@@ -16,16 +16,13 @@ class CampaignInfoActivity : AppCompatActivity() {
     private val db = RealTime()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val btnBack = findViewById<ImageButton>(R.id.btnBack)
-
-        btnBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_campaign_info)
 
+        val btnBack = findViewById<ImageButton>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         val userId = "Mike"
         val campaignName = intent.getStringExtra("campaignName") ?: return
 
