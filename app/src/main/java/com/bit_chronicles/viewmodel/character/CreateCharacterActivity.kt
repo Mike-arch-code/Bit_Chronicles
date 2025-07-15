@@ -40,7 +40,6 @@ class CreateCharacterActivity : AppCompatActivity() {
         spinnerRace = findViewById(R.id.spinnerRace)
         spinnerClass = findViewById(R.id.spinnerClass)
         spinnerBackground = findViewById(R.id.spinnerBackground)
-        radioGroupAlignment = findViewById(R.id.radioGroupAlignment)
         editPersonality = findViewById(R.id.editPersonalityTraits)
         editAbilities = findViewById(R.id.editAbilities)
         editMotivation = findViewById(R.id.editMotivation)
@@ -77,16 +76,12 @@ class CreateCharacterActivity : AppCompatActivity() {
 
         // Botón para generar el personaje con la IA
         buttonCreate.setOnClickListener {
-            val alignmentId = radioGroupAlignment.checkedRadioButtonId
-            val selectedRadio = findViewById<RadioButton>(alignmentId)
-            val alignment = selectedRadio?.text?.toString() ?: "Neutral"
 
             val prompt = CharacterPrompt(
                 name = editName.text.toString().trim(),
                 race = spinnerRace.selectedItem.toString(),
                 characterClass = spinnerClass.selectedItem.toString(),
                 background = spinnerBackground.selectedItem.toString(),
-                alignment = alignment,
                 personalityTraits = editPersonality.text.toString().trim(),
                 abilities = editAbilities.text.toString().trim(),
                 motivation = editMotivation.text.toString().trim()
