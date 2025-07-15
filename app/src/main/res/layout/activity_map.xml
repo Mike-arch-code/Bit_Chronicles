@@ -1,92 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/game_ui_container"
+    android:id="@+id/map_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#eeeeee">
+    android:background="#888888">
 
-    <!-- Imagen superior del evento actual -->
-    <ImageView
-        android:id="@+id/image_event"
+    <!-- Vista del mapa -->
+    <com.bit_chronicles.viewmodel.map.IsoMapView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:background="#cccccc"
-        android:contentDescription="Evento actual" />
+        android:layout_height="0dp"
+        android:layout_weight="0.6" />
 
-    <!-- Lista horizontal de jugadores con bombillo/estado -->
-
+    <!-- Contenedor con botón y preview de imagen -->
     <LinearLayout
-        android:id="@+id/playerIndicators"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
         android:orientation="vertical"
-        android:padding="8dp"
-        android:background="@color/crema"/>
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
-
-        <LinearLayout
-            android:id="@+id/player_list"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <!-- Se llena desde Kotlin -->
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <!-- Botones principales -->
-    <LinearLayout
-        android:id="@+id/main_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:padding="16dp">
 
         <Button
             android:id="@+id/btnVoice"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="🎤 Voz"
-            android:backgroundTint="#FF9800"
-            android:textColor="#FFFFFF" />
+            android:text="🎤 Hablar" />
 
-        <Button
-            android:id="@+id/btnEquipment"
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/imageViewPreview"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="🎒 Equipo"
-            android:backgroundTint="#3F51B5"
-            android:textColor="#FFFFFF"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp" />
-
-        <Button
-            android:id="@+id/btnDice"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="🎲 Dado"
-            android:backgroundTint="#4CAF50"
-            android:textColor="#FFFFFF" />
+            android:layout_marginTop="16dp" />
     </LinearLayout>
-
-    <!-- Zona inferior para animaciones o vistas dinámicas -->
-    <FrameLayout
-        android:id="@+id/game_fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#f5f5f5" />
-
 </LinearLayout>
