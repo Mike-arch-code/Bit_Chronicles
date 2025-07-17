@@ -13,12 +13,16 @@ import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bit_chronicles.R
 import com.bit_chronicles.model.VoiceCommandPrompt
+import com.bit_chronicles.model.api.ApiService
 import com.bit_chronicles.model.firebase.RealTime
+import com.bit_chronicles.model.prompts.Imageprom
+
 import com.bit_chronicles.viewmodel.DiceRollFragment
 import java.util.*
 
@@ -29,6 +33,7 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
     private lateinit var worldName: String
     private val vozPorDefecto = "es-es-x-eed-network"
     private val db = RealTime()
+    val apiService by viewModels<ApiService>()
     private var textoReconocido: String? = null
 
     private val jugadorCirculos = mutableMapOf<String, View>()
@@ -121,6 +126,14 @@ class MapActivity : AppCompatActivity(), TextToSpeech.OnInitListener {
                     onResult = { response ->
                         avanzarTurno()
                         Log.d("IA", "Respuesta: $response")
+
+
+                        Imageprom.generateAndDisplayImageFromText(
+                            activity = this,
+                            apiService = apiService,
+                            inputText = response,
+                            containerId = R.id.image_fragment_container
+                        )
                         speakText(response)
                     },
                     onError = { error ->

@@ -18,6 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "STABILITY_API_KEY", "\"sk-GVYesIVpQguOFXMCmvtBFK9ApAnR4pSZWszxF7IL3oEUkL06\"")
+
     }
 
     buildTypes {
@@ -41,6 +44,13 @@ android {
         buildConfig = true
     }
 }
+
+configurations.all {
+    resolutionStrategy {
+        force("com.squareup.okhttp3:okhttp:4.12.0")
+    }
+}
+
 
 dependencies {
 
@@ -70,4 +80,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.14.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0") // Opcional, pero útil
+
 }

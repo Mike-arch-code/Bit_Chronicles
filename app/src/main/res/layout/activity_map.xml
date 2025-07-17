@@ -7,14 +7,12 @@
     android:padding="16dp"
     android:background="@color/beige">
 
-    <!-- Imagen superior del evento actual -->
-    <ImageView
-        android:id="@+id/image_event"
+    <!-- Fragmento en la parte superior -->
+    <FrameLayout
+        android:id="@+id/image_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:background="@color/gris"
-        android:contentDescription="Evento actual" />
+        android:background="@color/gris" />
 
     <!-- Lista horizontal de jugadores -->
     <HorizontalScrollView
@@ -37,9 +35,7 @@
                 android:orientation="horizontal"
                 android:divider="?android:attr/dividerHorizontal"
                 android:showDividers="middle"
-                android:dividerPadding="4dp">
-                <!-- Jugadores se agregan desde Kotlin -->
-            </LinearLayout>
+                android:dividerPadding="4dp" />
         </LinearLayout>
     </HorizontalScrollView>
 
@@ -75,7 +71,7 @@
 
     </LinearLayout>
 
-    <!-- Contenedor para fragmentos (Dado u otros) -->
+    <!-- Contenedor para otros fragmentos -->
     <FrameLayout
         android:id="@+id/game_fragment_container"
         android:layout_width="match_parent"
