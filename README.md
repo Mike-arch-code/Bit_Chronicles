@@ -116,9 +116,9 @@ El código está organizado siguiendo los principios de la arquitectura limpia y
 
 ---
 ## 👨‍💻 Autor
-*                     **Maycol Andrei Figueroa
-						Diego Alejandro Hurtado
-						Julian Santiago Barbosa**
+*  **Maycol Andrei Figueroa
+Diego Alejandro Hurtado
+Julian Santiago Barbosa**
 * **GitHub:** [@TuUsuarioDeGitHub](https://github.com/TuUsuarioDeGitHub)
 * **LinkedIn:** [Tu Perfil de LinkedIn](https://www.linkedin.com/in/tu-perfil/)
 
