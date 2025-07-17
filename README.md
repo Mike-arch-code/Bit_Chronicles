@@ -113,7 +113,7 @@ El código está organizado siguiendo los principios de la arquitectura limpia y
 * **`com.bit_chronicles.view` (implícito):** Las `Activities` y `Fragments` que componen la capa de la Vista y utilizan los layouts de la carpeta `res/layout`.
 
 ---
-## 👨‍💻 Autor
+## 👨‍💻 Autores
 *  **Maycol Andrei Figueroa**
 * **Diego Alejandro Hurtado**
 * **Julian Santiago Barbosa**
