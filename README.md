@@ -14,7 +14,6 @@
 5. [Instalación y Puesta en Marcha](#-instalación-y-puesta-en-marcha)
 6. [Estructura del Proyecto](#-estructura-del-proyecto)
 7. [Autor](#-autor)
-8. [Licencia](#-licencia)
 
 ---
 ## ✨ Características Principales
