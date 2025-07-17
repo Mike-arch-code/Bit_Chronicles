@@ -1,7 +1,6 @@
 # Bit Chronicles 🐉
 
 ![Versión](https://img.shields.io/badge/versión-1.0-blue)
-![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 ![Plataforma](https://img.shields.io/badge/plataforma-Android-brightgreen)
 
 **Bit Chronicles** es una aplicación móvil para Android, desarrollada en **Kotlin y Java**, que reinventa la forma de gestionar y jugar campañas de Rol (RPG). Utiliza la potencia de la **IA de Google (Gemini)** para actuar como un Dungeon Master dinámico, generar narrativas inmersivas y crear representaciones visuales de las escenas, todo sincronizado en tiempo real a través de **Firebase**.
@@ -116,12 +115,11 @@ El código está organizado siguiendo los principios de la arquitectura limpia y
 
 ---
 ## 👨‍💻 Autor
-*  **Maycol Andrei Figueroa
-Diego Alejandro Hurtado
-Julian Santiago Barbosa**
-* **GitHub:** [@TuUsuarioDeGitHub](https://github.com/TuUsuarioDeGitHub)
-* **LinkedIn:** [Tu Perfil de LinkedIn](https://www.linkedin.com/in/tu-perfil/)
+*  **Maycol Andrei Figueroa**
+* **Diego Alejandro Hurtado**
+* **Julian Santiago Barbosa**
+
+
 
 ---
-## 📄 Licencia
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles
+
