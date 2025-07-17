@@ -26,7 +26,7 @@
 
 ---
 ## 📱 Capturas de Pantalla
-*(Aquí puedes poner imágenes de tu aplicación. Sube las imágenes a tu repositorio y enlaza a ellas)*
+
 
 | Pantalla de Inicio | Creación de Campaña | Pantalla de Juego |
 | :---: |:---:|:---:|
@@ -45,32 +45,6 @@
 ---
 ## 🏛️ Arquitectura del Sistema
 La aplicación sigue una arquitectura MVVM robusta, separando la UI, la lógica de presentación y el modelo de datos. El `Repository` centraliza la comunicación con los servicios de Firebase y Gemini.
-
-*(GitHub renderizará automáticamente este código Mermaid en un diagrama)*
-mermaid
-graph TD
-subgraph "Cliente: Bit Chronicles (Kotlin/Java)"
-direction TB
-V(View
-Activities/Layouts) <--> VM(ViewModel
-viewmodel/)
-VM --> R(Repository
-model/)
-end
-
-subgraph "Backend: Google Cloud"
-    direction TB
-    FB_Auth[Firebase Authentication]
-    FB_DB[Firestore Database]
-    Gemini[Gemini API]
-end
-
-User[(Jugador)] -- Interactúa con --> V
-
-R -- Petición de Login/Registro --> FB_Auth
-R -- Lectura/Escritura de Datos --> FB_DB
-R -- Petición de Generación de Contenido --> Gemini
-
 ---
 ## 🚀 Instalación y Puesta en Marcha
 Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local.
